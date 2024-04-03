@@ -59,7 +59,7 @@ def run():
         )
 
         with tab3:
-            df_grouped = filtered_df.groupby("Mês").sum().reset_index()
+            df_grouped = filtered_df.groupby("Mês").sum("Saldo").reset_index()
 
             chart = (
                 alt.Chart(df_grouped)
@@ -67,6 +67,8 @@ def run():
                 .encode(x="Mês", y="Saldo", color="Mês")
                 .properties(width=800, height=400)
             )
+
+            st.write(df_grouped)
 
             st.altair_chart(chart, use_container_width=True)
 
@@ -89,6 +91,8 @@ def run():
 
             st.altair_chart(chart1, use_container_width=True)
 
+            st.write(filtered_df)
+
         with tab5:
 
             def filtrar_dados(filtered_df, mes, natureza):
@@ -103,6 +107,7 @@ def run():
                         (filtered_df["Mês"] == mes)
                         & (filtered_df["Natureza Despesa"] == natureza)
                     ]
+            st.write(filtered_df)
 
             meses_unicos = ["Todos"] + filtered_df["Mês"].unique().tolist()
             naturezas_unicas = ["Todas"] + filtered_df[
