@@ -1,9 +1,4 @@
 import streamlit as st
-from streamlit.logger import get_logger
-import pandas as pd
-import matplotlib.pyplot as plt
-import plotly.express as px
-import numpy as np
 
 def run():
     st.set_page_config(

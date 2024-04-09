@@ -60,6 +60,7 @@ def run():
 
 
         with tab4:
+            st.write(filtered_df)
             chart1 = alt.Chart(filtered_df).mark_bar().encode(
                 x=alt.X('Mês', axis=alt.Axis(title='Mês')),
                 y=alt.Y('sum(Saldo)', axis=alt.Axis(title='Saldo')),

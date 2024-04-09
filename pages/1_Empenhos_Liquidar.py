@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
+from utils import clean_convert_column
 
 def run():
     # init_session_state()
@@ -33,14 +34,7 @@ def run():
     )
 
     df = pd.read_csv('./assets/csv/a_liquidar.csv', sep=';', decimal=',')
-
-    colunas_visiveis = [
-        "Natureza Despesa",
-        "Natureza Despesa Detalhada",
-        "Nome Favorecido",
-        "Mês",
-        "Saldo",
-    ]
+    colunas_visiveis = ['Natureza Despesa', 'Natureza Despesa Detalhada', 'Nome Favorecido', 'Mês', 'Saldo']
     filtered_df = df[colunas_visiveis]
 
     tab1, tab2 = st.tabs(["Dados", "Gráficos"])
@@ -59,7 +53,9 @@ def run():
         )
 
         with tab3:
-            df_grouped = filtered_df.groupby("Mês").sum("Saldo").reset_index()
+            clean_df = clean_convert_column(filtered_df.copy(), 'Saldo')
+            df_grouped = clean_df.groupby("Mês").sum().reset_index()
+            # st.write(df_grouped)
 
             chart = (
                 alt.Chart(df_grouped)
@@ -73,20 +69,30 @@ def run():
             st.altair_chart(chart, use_container_width=True)
 
         with tab4:
-            chart1 = (
-                alt.Chart(filtered_df)
-                .mark_bar()
-                .encode(
-                    x=alt.X("Mês", axis=alt.Axis(title="Mês")),
-                    y=alt.Y("sum(Saldo)", axis=alt.Axis(title="Saldo")),
-                    color="Natureza Despesa",
-                    tooltip=[
-                        "Mês",
-                        "Natureza Despesa",
-                        alt.Tooltip("sum(Saldo)", title="Saldo"),
-                    ],
-                )
-                .properties(width=800, height=400)
+            grouped_df = clean_df.groupby(['Natureza Despesa', 'Mês'])
+
+            # Calcular a soma do "Saldo" para cada grupo
+            aggregated_df = grouped_df['Saldo'].sum().reset_index()
+
+            # Combinar as informações em um único DataFrame
+            combined_df = pd.merge(clean_df, aggregated_df, on=['Natureza Despesa', 'Mês'])
+
+            # Renomear e descartar colunas desnecessárias
+            combined_df.rename(columns={'Saldo_y': 'Saldo'}, inplace=True)
+            combined_df.drop(['Saldo_x'], axis=1, inplace=True)
+
+            df_para_grafico = combined_df.groupby(['Natureza Despesa', 'Mês']).sum().reset_index()
+
+            # st.write(df_para_grafico)
+
+            chart1 = alt.Chart(df_para_grafico).mark_bar().encode(
+                x=alt.X('Mês', axis=alt.Axis(title='Mês')),
+                y=alt.Y('Saldo', axis=alt.Axis(title='Saldo')),
+                color='Natureza Despesa',
+                tooltip=['Mês', 'Natureza Despesa', alt.Tooltip('Saldo', title='Saldo')]
+            ).properties(
+                width=800,
+                height=400
             )
 
             st.altair_chart(chart1, use_container_width=True)
