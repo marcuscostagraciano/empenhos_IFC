@@ -63,9 +63,6 @@ def run():
                 .encode(x="Mês", y="Saldo", color="Mês")
                 .properties(width=800, height=400)
             )
-
-            st.write(df_grouped)
-
             st.altair_chart(chart, use_container_width=True)
 
         with tab4:
@@ -84,7 +81,6 @@ def run():
             df_para_grafico = combined_df.groupby(['Natureza Despesa', 'Mês']).sum().reset_index()
 
             # st.write(df_para_grafico)
-
             chart1 = alt.Chart(df_para_grafico).mark_bar().encode(
                 x=alt.X('Mês', axis=alt.Axis(title='Mês')),
                 y=alt.Y('Saldo', axis=alt.Axis(title='Saldo')),
@@ -94,61 +90,40 @@ def run():
                 width=800,
                 height=400
             )
-
             st.altair_chart(chart1, use_container_width=True)
 
-            st.write(filtered_df)
-
         with tab5:
-
-            def filtrar_dados(filtered_df, mes, natureza):
-                if mes == "Todos" and natureza == "Todas":
+            def filtrar_dados(filtered_df, mes, naturezas_selecionadas):
+                if mes == 'Todos' and naturezas_selecionadas == ['Todas']:
                     return filtered_df
-                elif mes == "Todos":
-                    return filtered_df[filtered_df["Natureza Despesa"] == natureza]
-                elif natureza == "Todas":
-                    return filtered_df[filtered_df["Mês"] == mes]
+                elif naturezas_selecionadas != ['Todas']:
+                    return filtered_df[filtered_df['Natureza Despesa'].isin(naturezas_selecionadas)]
+                elif mes != 'Todos':
+                    return filtered_df[filtered_df['Mês'] == mes]
                 else:
-                    return filtered_df[
-                        (filtered_df["Mês"] == mes)
-                        & (filtered_df["Natureza Despesa"] == natureza)
-                    ]
-            st.write(filtered_df)
+                    return filtered_df[(filtered_df['Mês'] == mes) & (filtered_df['Natureza Despesa'].isin(naturezas_selecionadas))]
 
-            meses_unicos = ["Todos"] + filtered_df["Mês"].unique().tolist()
-            naturezas_unicas = ["Todas"] + filtered_df[
-                "Natureza Despesa"
-            ].unique().tolist()
+            meses_unicos = ['Todos'] + filtered_df['Mês'].unique().tolist()
+            naturezas_unicas = filtered_df['Natureza Despesa'].unique().tolist()
 
-            mes_selecionado = st.selectbox("Selecione o mês", meses_unicos)
-            natureza_selecionada = st.selectbox(
-                "Selecione a natureza de despesa", naturezas_unicas
-            )
+            mes_selecionado = st.selectbox('Selecione o mês', meses_unicos)
+            naturezas_unicas = ['Todas'] + filtered_df['Natureza Despesa'].unique().tolist()
+            naturezas_selecionadas = st.multiselect('Selecione a natureza de despesa', naturezas_unicas, 'Todas')
+            
+            df_filtrado = filtrar_dados(filtered_df, mes_selecionado, naturezas_selecionadas)
 
-            df_filtrado = filtrar_dados(
-                filtered_df, mes_selecionado, natureza_selecionada
-            )
+            clean_df = clean_convert_column(df_filtrado.copy(), 'Saldo')
+            df_grouped = clean_df.groupby(['Natureza Despesa', 'Mês']).sum().reset_index()
 
-            df_grouped = (
-                df_filtrado.groupby(["Mês", "Natureza Despesa"]).sum().reset_index()
-            )
-
-            chart2 = (
-                alt.Chart(df_grouped)
-                .mark_bar()
-                .encode(
-                    x="Mês",
-                    y="Saldo",
-                    color="Natureza Despesa",
-                    tooltip=[
-                        "Mês",
-                        "Natureza Despesa",
-                        alt.Tooltip("Saldo", title="Saldo"),
-                    ],
-                )
-                .properties(width=800, height=400)
-                .interactive()
-            )
+            chart2 = alt.Chart(df_grouped).mark_bar().encode(
+                x='Mês',
+                y='Saldo',
+                color='Natureza Despesa',
+                tooltip=['Mês', 'Natureza Despesa', alt.Tooltip('Saldo', title='Saldo')]
+            ).properties(
+                width=800,
+                height=400
+            ).interactive()
 
             st.altair_chart(chart2, use_container_width=True)
 
