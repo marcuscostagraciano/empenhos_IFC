@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 from utils import clean_convert_column
+import numpy as np
 
 def run():
     # init_session_state()
