@@ -5,3 +5,4 @@ streamlit
 matplotlib
 plotly
 scikit-learn
+streamlit-aggrid
