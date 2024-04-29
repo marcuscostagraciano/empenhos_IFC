@@ -116,7 +116,7 @@ def run():
         textprops={"fontsize": 5},
     )
 
-    ax.set(aspect="equal", title="Bla")
+    ax.set(aspect="equal", title="Empenhado x Liquidado - Natureza da Despesa")
     st.pyplot(fig)
 
 if __name__ == "__main__":
