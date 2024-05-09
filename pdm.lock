@@ -5,7 +5,7 @@
 groups = ["default"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:49389aa5ecc56ac901107f2e2295923fc21eaf290afb3cd66fe152677360cf49"
+content_hash = "sha256:1aec43664e232b23a8d45fa6fefcf0b767b3a0c0793f9c1905a63e4f9e705191"
 
 [[package]]
 name = "altair"
@@ -708,6 +708,7 @@ files = [
 
 [[package]]
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 name = "prettytable"
 version = "3.10.0"
@@ -723,6 +724,8 @@ files = [
 ]
 
 [[package]]
+=======
+>>>>>>> 06e9ba4 (FEAT: Adding initial components)
 name = "prometheus-client"
 version = "0.20.0"
 requires_python = ">=3.8"
@@ -734,7 +737,10 @@ files = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 >>>>>>> 1758e0c (FEAT: Implementing st_echarts)
+=======
+>>>>>>> 06e9ba4 (FEAT: Adding initial components)
 name = "protobuf"
 version = "4.25.3"
 requires_python = ">=3.8"
@@ -1126,7 +1132,10 @@ files = [
 
 [[package]]
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 06e9ba4 (FEAT: Adding initial components)
 name = "streamlit-camera-input-live"
 version = "0.2.0"
 requires_python = ">=3.7"
@@ -1156,6 +1165,7 @@ files = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "streamlit-echarts"
 version = "0.4.0"
 requires_python = ">=3.6"
@@ -1172,6 +1182,8 @@ files = [
 ]
 
 [[package]]
+=======
+>>>>>>> 06e9ba4 (FEAT: Adding initial components)
 name = "streamlit-embedcode"
 version = "0.1.2"
 requires_python = ">=3.6"
@@ -1290,7 +1302,10 @@ files = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 >>>>>>> 1758e0c (FEAT: Implementing st_echarts)
+=======
+>>>>>>> 06e9ba4 (FEAT: Adding initial components)
 name = "tenacity"
 version = "8.2.3"
 requires_python = ">=3.7"
