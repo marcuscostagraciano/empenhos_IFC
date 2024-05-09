@@ -12,7 +12,13 @@ def select_if():
     layout_cols = st.columns((1, 1, 2))
 
     with layout_cols[0]:
-        option1 = get_campus_option()
+        state_option = st.selectbox(
+            f"Selecione o Estado",
+            ["SC", "RS", "PR", "..."],
+        )
 
     with layout_cols[1]:
-        option2 = get_campus_option()
+        campus_option = st.selectbox(
+            f"Selecione o Campus",
+            ["Araquari", "Camboriú", "Sombrio", "Videira", "..."],
+        )

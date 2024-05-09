@@ -4,7 +4,7 @@ def indicators():
     st.divider()
     st.write(f"## Indicadores Gerais")
     row = st.columns(3)
-    st.divider()
+    st.write("#")
 
     with row[0]:
         st.write("#### R$ 1.000.000,00")

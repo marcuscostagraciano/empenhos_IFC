@@ -9,15 +9,15 @@ from components.main_graph import main_graph
 from components.tabs_container import tabs_container
 
 def main():    
-    st.info("__NOTA__: DURANTES OS TESTE PODEM HAVER ERROS DE ID(**DuplicateWidgetID**)")
-    st.write(f"# Análise de Empenhos Pagos e a Liquidar dos Institutos Federais")
+    st.warning("__AVISO__: DURANTES OS TESTE PODEM HAVER ERROS DE ID(**DuplicateWidgetID**)")
+    st.write(f"# Análise de Empenhos Pagos e a Liquidar dos :green[Institutos Federais]")
     select_if()
     indicators()
     tabs_container()
 
 if __name__ == "__main__":
     st.set_page_config(
-        page_title="Análise de Empenhos Pagos e a Liquidar", 
+        page_title="IF - Análise de Empenhos Pagos e a Liquidar", 
         page_icon=":chart_with_upwards_trend:",
         layout="wide",
     )
