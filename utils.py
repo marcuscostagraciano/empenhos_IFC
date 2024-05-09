@@ -51,3 +51,17 @@ def create_card_chart(title='Titulo do Grafico', desciption='pequena descrição
         option2 = get_campus_option()
 
     st.altair_chart(create_simple_chart(), use_container_width=True)
+
+def create_card_table(title='Titulo do Grafico', desciption='pequena descrição sobre o grafico', border=False):
+    container_col = st.container(border=border)
+    container_col.write(f"### {title}")
+    container_col.caption(f"{desciption}")
+    layout_cols = st.columns((1, 1, 2))
+
+    with layout_cols[0]:
+        option1 = get_campus_option()
+
+    with layout_cols[1]:
+        option2 = get_campus_option()
+
+    st.write('dataframe vem aqui')
