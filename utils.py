@@ -1,19 +1,9 @@
 import pandas as pd
 import altair as alt
 import streamlit as st
+import random
 
 def clean_convert_column(df, column_name):
-    """
-    This function cleans and converts a column to float, handling various decimal separators.
-
-    Args:
-        df (pandas.DataFrame): The DataFrame containing the column to clean.
-        column_name (str): The name of the column to clean and convert.
-
-    Returns:
-        pandas.DataFrame: The DataFrame with the cleaned and converted column.
-    """
-
     # Replace thousand separators with decimals (assuming '.' is decimal separator)
     df[column_name] = df[column_name].str.replace(',', '.')
 
@@ -39,17 +29,25 @@ def create_simple_chart():
 
     return chart
 
-def get_campus_option(id):
-    """
-    This function returns the selected campus option.
-
-    Returns:
-        str: The selected campus option.
-    """
-
+def get_campus_option():
+    id = random.randint(1, 1000)
     campus_option = st.selectbox(
         f"Selecione o Campus {id}",
         ["Araquari", "Camboriú", "Sombrio", "Videira"],
     )
 
     return campus_option
+
+def create_card_chart(title='Titulo do Grafico', desciption='pequena descrição sobre o grafico', border=False):
+    container_col = st.container(border=border)
+    container_col.write(f"### {title}")
+    container_col.caption(f"{desciption}")
+    layout_cols = st.columns((1, 1, 2))
+
+    with layout_cols[0]:
+        option1 = get_campus_option()
+
+    with layout_cols[1]:
+        option2 = get_campus_option()
+
+    st.altair_chart(create_simple_chart(), use_container_width=True)
