@@ -28,7 +28,6 @@ def main_graph():
     df['Liquidado Formatado'] = df['Liquidado'].map('R$ {:,.2f}'.format)
 
     df_mes = df.groupby(['Mês'])[['Empenhado', 'Liquidado']].sum().reset_index()
-    st.write(df_mes)
     df_mes["Empenhado Formatado"] = df_mes["Empenhado"].map("R$ {:,.2f}".format)
     df_mes["Liquidado Formatado"] = df_mes["Liquidado"].map("R$ {:,.2f}".format)
 
@@ -36,21 +35,21 @@ def main_graph():
     df_mes_natureza["Empenhado Formatado"] = df_mes_natureza["Empenhado"].map("R$ {:,.2f}".format)
     df_mes_natureza["Liquidado Formatado"] = df_mes_natureza["Liquidado"].map("R$ {:,.2f}".format)
 
-    plt.figure(figsize=(10, 6))
+    # plt.figure(figsize=(10, 6))
 
-    plt.plot(df_mes['Mês'], df_mes['Empenhado'], label='Empenhado', marker='x', color='red')
-    plt.plot(df_mes['Mês'], df_mes['Liquidado'], label='Liquidado', marker='o', color='blue')
-    plt.xlabel('Mês')
-    plt.ylabel('Valor')
-    plt.title('Empenhado x Liquidado por Mês')
-    plt.legend()
-    plt.xticks(df_mes['Mês'])
-    valores_y = pd.concat([df_mes['Empenhado'], df_mes['Liquidado']])
-    plt.yticks(valores_y)
-    st.pyplot(plt)
+    # plt.plot(df_mes['Mês'], df_mes['Empenhado'], label='Empenhado', marker='x', color='red')
+    # plt.plot(df_mes['Mês'], df_mes['Liquidado'], label='Liquidado', marker='o', color='blue')
+    # plt.xlabel('Mês')
+    # plt.ylabel('Valor')
+    # plt.title('Empenhado x Liquidado por Mês')
+    # plt.legend()
+    # plt.xticks(df_mes['Mês'])
+    # valores_y = pd.concat([df_mes['Empenhado'], df_mes['Liquidado']])
+    # plt.yticks(valores_y)
+    # st.pyplot(plt)
 
-    plt.clf();
-    st.write("Dataframe Janeiro")
+    # plt.clf();
+    # st.write("Dataframe Janeiro")
     df_mes = (
         df.groupby("Mês")[["Empenhado", "Liquidado"]]
         .sum()
@@ -58,7 +57,7 @@ def main_graph():
     )
     df_mes["Empenhado"] = df_mes["Empenhado"].astype("int")
     df_mes["Liquidado"] = df_mes["Liquidado"].astype("int")
-    st.write(df_mes)
+    # st.write(df_mes)
 
     options = {
         "title": {"text": "Empenhado x Liquidado (Mês a Mês)"},
