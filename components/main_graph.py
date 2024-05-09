@@ -3,7 +3,7 @@ from utils import create_simple_chart
 import pandas as pd
 import matplotlib.pyplot as plt
 import altair as alt
-from streamlit_echarts import st_echarts
+from streamlit_echarts import st_echarts, st_pyecharts
 
 def main_graph():
 
@@ -60,26 +60,10 @@ def main_graph():
     df_mes["Liquidado"] = df_mes["Liquidado"].astype("int")
     st.write(df_mes)
 
-    # plt.figure(figsize=(29, 20))
-    # plt.pie(
-    #     df_mes["Empenhado"],
-    #     labels=df_mes["Natureza Despesa"],
-    #     startangle=90,
-    #     pctdistance=0.85,
-    #     autopct="%1.1f%%",
-    #     labeldistance=1.1,
-    #     textprops={"fontsize": 18, "fontweight": "bold"},
-    #     wedgeprops={"linewidth": 3, "edgecolor": "white"},
-    # )
-    # plt.legend(loc="lower right", fontsize=15)
-    # plt.title("Empenhos IFC", fontsize=50, fontweight="bold", pad=30)
-    # plt.axis("equal")
-    # st.pyplot(plt)
-
     options = {
         "title": {"text": "Empenhado x Liquidado (Mês a Mês)"},
         "tooltip": {"trigger": "axis"},
-        "legend": {"data": ["Liquidado", "Teste", "Empenhado"]},
+        "legend": {"data": ["Liquidado", "Empenhado"]},
         "grid": {"left": "3%", "right": "4%", "bottom": "3%", "containLabel": True},
         "toolbox": {"feature": {"saveAsImage": {}}},
         "xAxis": {
@@ -92,22 +76,18 @@ def main_graph():
             {
                 "name": "Liquidado",
                 "type": "line",
-                "stack": "Total",
-                "data": df_mes['Liquidado'].tolist(),
-            },
-            {
-                "name": "Liquidado",
-                "type": "line",
-                "stack": "Total",
+                "stack": "Liquidado",
                 "data": df_mes['Liquidado'].tolist(),
             },
             {
                 "name": "Empenhado",
                 "type": "line",
-                "stack": "Total",
+                "stack": "Empenhado",
                 "data": df_mes['Empenhado'].tolist(),
-                # "data": [200, 300000, 0, 1000000]
             },
         ],
     }
+    print(df_mes["Empenhado"].tolist())
+    print(df_mes["Liquidado"].tolist())
+
     st_echarts(options=options, height="400px")
