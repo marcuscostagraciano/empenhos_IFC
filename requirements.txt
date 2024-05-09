@@ -5,9 +5,7 @@ streamlit
 matplotlib
 plotly
 scikit-learn
-<<<<<<< HEAD
 streamlit-aggrid
 streamlit-echarts
-=======
 streamlit-aggrid
->>>>>>> eb4049a (FEAT(layout): Adding new layout)
+
