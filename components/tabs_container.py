@@ -1,11 +1,15 @@
 import streamlit as st
-from components.turn_dataframes import turn_dataframes
-from components.turn_graphs import turn_graphs
+from components.main_graph import main_graph
+from components.main_table import main_table
+from components.tabs_childrens import tabs_childrens
 
 def tabs_container():
     tab1, tab2 = st.tabs(['Dados em forma de Gráficos', 'Dados em forma de Tabela'])
 
     with tab1:
-        turn_graphs()
+        main_graph()
+        tabs_childrens()
+
     with tab2:
-        turn_dataframes()
+        main_table()
+        tabs_childrens(onlyTable=True)

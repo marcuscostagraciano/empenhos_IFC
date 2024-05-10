@@ -38,19 +38,22 @@ def get_campus_option():
 
     return campus_option
 
-def create_card_chart(title='Titulo do Grafico', desciption='pequena descrição sobre o grafico', border=False):
+def create_card(title='Titulo do Grafico', desciption='pequena descrição sobre o grafico', border=False, onlyTable=False):
     container_col = st.container(border=border)
     container_col.write(f"### {title}")
     container_col.caption(f"{desciption}")
-    layout_cols = st.columns((1, 1, 2))
 
-    with layout_cols[0]:
-        option1 = get_campus_option()
+    if onlyTable:
+        st.write('dataframe vem aqui')
+    else:
+        layout_cols = st.columns((1, 1, 2))
 
-    with layout_cols[1]:
-        option2 = get_campus_option()
+        with layout_cols[0]:
+            option1 = get_campus_option()
 
-    st.altair_chart(create_simple_chart(), use_container_width=True)
+        with layout_cols[1]:
+            option2 = get_campus_option()
+        st.altair_chart(create_simple_chart(), use_container_width=True)
 
 def create_card_table(title='Titulo do Grafico', desciption='pequena descrição sobre o grafico', border=False):
     container_col = st.container(border=border)
