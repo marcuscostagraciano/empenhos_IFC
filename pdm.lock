@@ -707,6 +707,12 @@ files = [
 ]
 
 [[package]]
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 8422d6c (FEAT: Implementing st_echarts)
 name = "prettytable"
 version = "3.10.0"
 requires_python = ">=3.8"
@@ -721,6 +727,11 @@ files = [
 ]
 
 [[package]]
+<<<<<<< HEAD
+=======
+>>>>>>> 06e9ba4 (FEAT: Adding initial components)
+=======
+>>>>>>> 8422d6c (FEAT: Implementing st_echarts)
 name = "prometheus-client"
 version = "0.20.0"
 requires_python = ">=3.8"
@@ -732,6 +743,10 @@ files = [
 ]
 
 [[package]]
+<<<<<<< HEAD
+>>>>>>> 1758e0c (FEAT: Implementing st_echarts)
+=======
+>>>>>>> 06e9ba4 (FEAT: Adding initial components)
 name = "protobuf"
 version = "4.25.3"
 requires_python = ">=3.8"
@@ -1122,6 +1137,11 @@ files = [
 ]
 
 [[package]]
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 06e9ba4 (FEAT: Adding initial components)
 name = "streamlit-camera-input-live"
 version = "0.2.0"
 requires_python = ">=3.7"
@@ -1151,6 +1171,10 @@ files = [
 ]
 
 [[package]]
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 8422d6c (FEAT: Implementing st_echarts)
 name = "streamlit-echarts"
 version = "0.4.0"
 requires_python = ">=3.6"
@@ -1167,6 +1191,11 @@ files = [
 ]
 
 [[package]]
+<<<<<<< HEAD
+=======
+>>>>>>> 06e9ba4 (FEAT: Adding initial components)
+=======
+>>>>>>> 8422d6c (FEAT: Implementing st_echarts)
 name = "streamlit-embedcode"
 version = "0.1.2"
 requires_python = ">=3.6"
@@ -1285,6 +1314,10 @@ files = [
 ]
 
 [[package]]
+<<<<<<< HEAD
+>>>>>>> 1758e0c (FEAT: Implementing st_echarts)
+=======
+>>>>>>> 06e9ba4 (FEAT: Adding initial components)
 name = "tenacity"
 version = "8.2.3"
 requires_python = ">=3.7"

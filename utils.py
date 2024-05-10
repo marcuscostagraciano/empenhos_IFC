@@ -38,19 +38,22 @@ def get_campus_option():
 
     return campus_option
 
-def create_card_chart(title='Titulo do Grafico', desciption='pequena descrição sobre o grafico', border=False):
+def create_card(title='Titulo do Grafico', desciption='pequena descrição sobre o grafico', border=False, onlyTable=False):
     container_col = st.container(border=border)
     container_col.write(f"### {title}")
     container_col.caption(f"{desciption}")
-    layout_cols = st.columns((1, 1, 2))
 
-    with layout_cols[0]:
-        option1 = get_campus_option()
+    if onlyTable:
+        st.write('dataframe vem aqui')
+    else:
+        layout_cols = st.columns((1, 1, 2))
 
-    with layout_cols[1]:
-        option2 = get_campus_option()
+        with layout_cols[0]:
+            option1 = get_campus_option()
 
-    st.altair_chart(create_simple_chart(), use_container_width=True)
+        with layout_cols[1]:
+            option2 = get_campus_option()
+        st.altair_chart(create_simple_chart(), use_container_width=True)
 
 def create_card_table(title='Titulo do Grafico', desciption='pequena descrição sobre o grafico', border=False):
     container_col = st.container(border=border)
@@ -65,3 +68,27 @@ def create_card_table(title='Titulo do Grafico', desciption='pequena descrição
         option2 = get_campus_option()
 
     st.write('dataframe vem aqui')
+
+def main_table():
+    df = pd.read_csv("../assets/xls/empenhos.csv", encoding='ISO-8859-1', sep=";", decimal=",")
+
+    colunas_visiveis = [
+        'Natureza Despesa',
+        'Natureza Despesa Detalhada',
+        'Métrica',
+        'Mês',
+        'Empenhado',
+        'Liquidado',
+    ]
+
+    df = df[colunas_visiveis]
+    df['Empenhado'] = df['Empenhado'].str.replace('.', '').str.replace(',', '.').astype(float)
+    df['Liquidado'] = df['Liquidado'].str.replace('.', '').str.replace(',', '.').astype(float)
+    df['Empenhado Formatado'] = df['Empenhado'].map('R$ {:,.2f}'.format)
+    df['Liquidado Formatado'] = df['Liquidado'].map('R$ {:,.2f}'.format)
+
+    df_mes = df.groupby(['Mês'])[['Empenhado', 'Liquidado']].sum().reset_index()
+    df_mes["Empenhado Formatado"] = df_mes["Empenhado"].map("R$ {:,.2f}".format)
+    df_mes["Liquidado Formatado"] = df_mes["Liquidado"].map("R$ {:,.2f}".format)
+
+    return df_mes

@@ -3,9 +3,7 @@ import pandas as pd
 import streamlit as st
 from utils import *
 from components.indicators import indicators
-from components.tabs_child_graph import tabs_child_graph
 from components.select_if import select_if
-from components.main_graph import main_graph
 from components.tabs_container import tabs_container
 
 def main():    
