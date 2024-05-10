@@ -1,4 +1,4 @@
-simport streamlit as st
+import streamlit as st
 from components.main_graph import main_graph
 from components.main_table import main_table
 from components.tabs_childrens import tabs_childrens
