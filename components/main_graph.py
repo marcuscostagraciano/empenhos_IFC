@@ -7,8 +7,8 @@ from streamlit_echarts import st_echarts, st_pyecharts
 
 def main_graph():
 
-    st.write(f"## Empenhado x Liquidado (Mês a Mês)")
-    st.caption("pequena descrição sobre o grafico")
+    st.caption("#")
+    st.caption("### Empenhado x Liquidado (Mês a Mês)")
 
     df = pd.read_csv("./assets/xls/empenhos.csv", encoding='ISO-8859-1', sep=";", decimal=",")
 
@@ -60,7 +60,7 @@ def main_graph():
     # st.write(df_mes)
 
     options = {
-        "title": {"text": "Empenhado x Liquidado (Mês a Mês)"},
+        "title": {"text": ""},
         "tooltip": {"trigger": "axis"},
         "legend": {"data": ["Liquidado", "Empenhado"]},
         "grid": {"left": "3%", "right": "4%", "bottom": "3%", "containLabel": True},
