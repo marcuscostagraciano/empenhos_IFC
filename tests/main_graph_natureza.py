@@ -48,10 +48,10 @@ st.write(pivoted_reset.iloc[3].tolist())
 st.write(pivoted_reset.columns.tolist())
 
 
-st.session_state.a1 = st.selectbox(
-    f"Selecione o Mês",
-    ["01", "02", "03", "04"]
-)
+# st.session_state.a1 = st.selectbox(
+#     f"Selecione o Mês",
+#     ["01", "02", "03", "04"]
+# )
 
 option = {
     "legend": {},

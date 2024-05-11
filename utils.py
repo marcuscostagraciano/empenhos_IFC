@@ -1,7 +1,44 @@
 import pandas as pd
 import altair as alt
 import streamlit as st
+import uuid
 import random
+
+def get_options_month_detail(df):
+    source = [df.columns.tolist()]
+    for i in range(df.shape[0]):
+        source.append(df.iloc[i].tolist())
+
+    series = []
+    for i in range(len(source)):
+        series.append({
+            "type": "line",
+            "smooth": True,
+            "seriesLayoutBy": "row",
+            "emphasis": {"focus": "series"},
+        })
+
+    series.append({     
+        "type": "pie",
+        "id": str(uuid.uuid4()),
+        "radius": "40%",
+        "center": ["50%", "32%"],
+        "emphasis": {"focus": "data"},
+        "label": {"formatter": "{b}: {@04/2024} ({d}%)"},
+        "encode": {"itemName": "Natureza Despesa", "value": f"{st.session_state.month}/2024", "tooltip": "04/2024"},
+    })
+
+    return {
+        "legend": {},
+        "tooltip": {"trigger": "axis", "showContent": False},
+        "dataset": {
+            "source": source
+        },
+        "xAxis": {"type": "category"},
+        "yAxis": {"gridIndex": 0},
+        "grid": {"top": "55%"},
+        "series": series,
+    }
 
 def clean_convert_column(df, column_name):
     # Replace thousand separators with decimals (assuming '.' is decimal separator)
@@ -53,7 +90,6 @@ def create_card(title='Titulo do Grafico', desciption='pequena descrição sobre
 
         with layout_cols[1]:
             option2 = get_campus_option()
-        st.altair_chart(create_simple_chart(), use_container_width=True)
 
 def create_card_table(title='Titulo do Grafico', desciption='pequena descrição sobre o grafico', border=False):
     container_col = st.container(border=border)
