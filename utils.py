@@ -10,6 +10,31 @@ def get_options_month_detail(df):
         source.append(df.iloc[i].tolist())
 
     series = []
+    series.append({     
+        "type": "pie",
+        "id": str(uuid.uuid4()),
+        "radius": "50%",
+        "center": ["50%", "70%"],
+        "emphasis": {"focus": "data"},
+        "label": {"formatter": "{d}%"},
+        "encode": {"itemName": "Natureza Despesa", "value": f"{st.session_state.month}/2024", "tooltip": "04/2024"},
+    })
+
+    return {
+        "legend": { "left": "1%", "right": "0%" },
+        "tooltip": {"trigger": "axis", "showContent": False},
+        "dataset": {
+            "source": source
+        },
+        "series": series,
+    }
+
+def get_options_month(df):
+    source = [df.columns.tolist()]
+    for i in range(df.shape[0]):
+        source.append(df.iloc[i].tolist())
+
+    series = []
     for i in range(len(source)):
         series.append({
             "type": "line",
@@ -18,25 +43,15 @@ def get_options_month_detail(df):
             "emphasis": {"focus": "series"},
         })
 
-    series.append({     
-        "type": "pie",
-        "id": str(uuid.uuid4()),
-        "radius": "40%",
-        "center": ["50%", "32%"],
-        "emphasis": {"focus": "data"},
-        "label": {"formatter": "{b}: {@04/2024} ({d}%)"},
-        "encode": {"itemName": "Natureza Despesa", "value": f"{st.session_state.month}/2024", "tooltip": "04/2024"},
-    })
-
     return {
-        "legend": {},
-        "tooltip": {"trigger": "axis", "showContent": False},
+        "tooltip": {"trigger": "axis"},
+        "legend": { "top": "2%", "left": "1%", "right": "0%"},
         "dataset": {
             "source": source
         },
         "xAxis": {"type": "category"},
         "yAxis": {"gridIndex": 0},
-        "grid": {"top": "55%"},
+        "grid": {"top": "20%", "left": "1%", "right": "0%", "containLabel": True},
         "series": series,
     }
 

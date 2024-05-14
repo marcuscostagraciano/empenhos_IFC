@@ -62,8 +62,8 @@ def main_graph():
     options = {
         "title": {"text": ""},
         "tooltip": {"trigger": "axis"},
-        "legend": {"data": ["Liquidado", "Empenhado"]},
-        "grid": {"left": "3%", "right": "4%", "bottom": "3%", "containLabel": True},
+        "legend": {"data": ["Liquidado", "Empenhado"], "left": "1%", "right": "0%"},
+        "grid": {"left": "1%", "right": "0%", "bottom": "3%", "containLabel": True},
         "toolbox": {"feature": {"saveAsImage": {}}},
         "xAxis": {
             "type": "category",
