@@ -17,7 +17,7 @@ def get_options_month_detail(df):
         "center": ["50%", "70%"],
         "emphasis": {"focus": "data"},
         "label": {"formatter": "{d}%"},
-        "encode": {"itemName": "Natureza Despesa", "value": f"{st.session_state.month}/2024", "tooltip": "04/2024"},
+        "encode": {"itemName": "Natureza Despesa", "value": unformatted_months(st.session_state.month), "tooltip": "04/2024"},
     })
 
     return {
@@ -29,7 +29,44 @@ def get_options_month_detail(df):
         "series": series,
     }
 
+def unformatted_months(month):
+    dict = {
+        "Janeiro": "01/2024",
+        "Fevereiro": "02/2024",
+        "Março": "03/2024",
+        "Abril": "04/2024",
+        "Maio": "05/2024",
+        "Junho": "06/2024",
+        "Julho": "07/2024",
+        "Agosto": "08/2024",
+        "Setembro": "09/2024",
+        "Outubro": "10/2024",
+        "Novembro": "11/2024",
+        "Dezembro": "12/2024"
+    }
+    
+    return dict[month]
+
+def formatted_months(month):
+    dict = {
+        "01/2024": "Janeiro",
+        "02/2024": "Fevereiro",
+        "03/2024": "Março",
+        "04/2024": "Abril",
+        "05/2024": "Maio",
+        "06/2024": "Junho",
+        "07/2024": "Julho",
+        "08/2024": "Agosto",
+        "09/2024": "Setembro",
+        "10/2024": "Outubro",
+        "11/2024": "Novembro",
+        "12/2024": "Dezembro"
+    }
+
+    return dict[month]
+
 def get_options_month(df):
+    df.columns = [formatted_months(col) if col != 'Natureza Despesa' else col for col in df.columns] # Renaming columns to formatted months
     source = [df.columns.tolist()]
     for i in range(df.shape[0]):
         source.append(df.iloc[i].tolist())
@@ -49,7 +86,11 @@ def get_options_month(df):
         "dataset": {
             "source": source
         },
-        "xAxis": {"type": "category"},
+        "xAxis": {
+            "type": "category",
+            "boundaryGap": False, 
+            "axisLabel": {"margin": 20 }, 
+        },
         "yAxis": {"gridIndex": 0},
         "grid": {"top": "20%", "left": "1%", "right": "2%", "containLabel": True},
         "series": series,

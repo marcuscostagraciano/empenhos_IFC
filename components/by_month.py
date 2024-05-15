@@ -9,18 +9,18 @@ def by_month(onlyTable=False):
 
     st.caption("## Empenhado")
     st.caption('Relatório do dinheiro requisitados para o governo pela reitoria do IF')
-    df_moth_detail = df_manager.get_df_month_detail(value='Empenhado')
+    [raw_datas, formatted_datas] = df_manager.get_df_month_detail(value='Empenhado')
     if onlyTable:
-        st.table(df_moth_detail)
+        st.table(formatted_datas)
     else:
-        chart_options = get_options_month(df_moth_detail)
+        chart_options = get_options_month(raw_datas)
         st_echarts(chart_options, height="500px", key="df_moth_empenho")
 
     st.caption("## Liquidado")
     st.caption('Relatório do dinheiro investido pela reitoria do IF')
-    df_moth_detail = df_manager.get_df_month_detail(value='Liquidado')
+    [raw_datas, formatted_datas] = df_manager.get_df_month_detail(value='Liquidado')
     if onlyTable:
-        st.table(df_moth_detail)
+        st.table(formatted_datas)
     else:
-        chart_options = get_options_month(df_moth_detail)
+        chart_options = get_options_month(raw_datas)
         st_echarts(chart_options, height="500px", key="df_moth_liquidado")

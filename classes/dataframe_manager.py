@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import streamlit as st
 from streamlit.logger import get_logger
+from utils import *
 
 LOGGER = get_logger(__name__)
 
@@ -16,20 +17,6 @@ class DataframeManager:
             st.session_state.df_master = pd.read_csv("assets/xls/empenhos.csv", encoding='ISO-8859-1', sep=";", decimal=",")
         if "month" not in st.session_state:
             st.session_state.month = "01"
-    
-    def get_df_month(self):
-        self.to_float()
-        visible_columns = [
-            'Mês',
-            'Empenhado',
-            'Liquidado',
-        ]
-        df = st.session_state.df_master[visible_columns]
-        df_month = df.groupby(['Mês'])[['Empenhado', 'Liquidado']].sum().reset_index()
-        df_month['Empenhado (R$)'] = df_month['Empenhado'].map('R$ {:,.2f}'.format)
-        df_month['Liquidado (R$)'] = df_month['Liquidado'].map('R$ {:,.2f}'.format)
-        
-        return df_month[['Mês', 'Empenhado (R$)', 'Liquidado (R$)']]
 
     def get_df_month_detail(self, value='Empenhado'):
         self.to_float()
@@ -41,17 +28,19 @@ class DataframeManager:
         ]
 
         df = st.session_state.df_master[visible_columns]
-
         df_month_detail = df.groupby(['Mês', 'Natureza Despesa'])[['Empenhado', 'Liquidado']].sum().reset_index()
         df_month_detail['Empenhado (R$)'] = st.session_state.df_master['Empenhado'].map('R$ {:,.2f}'.format)
         df_month_detail['Liquidado (R$)'] = st.session_state.df_master['Liquidado'].map('R$ {:,.2f}'.format)
-
         pivoted = pd.pivot_table(df_month_detail, values=value, index='Natureza Despesa', columns='Mês')
-        pivoted.columns = ['01/2024', '02/2024', '03/2024', '04/2024']
         pivoted = pivoted.fillna(0)
-        pivoted_reset = pivoted.reset_index()
+        raw_datas = pivoted.reset_index()
         
-        return pivoted_reset
+        formatted_datas = pivoted.copy()
+        formatted_columns = {col: formatted_months(col) for col in formatted_datas.columns}
+        formatted_datas = formatted_datas.rename(columns=formatted_columns).applymap(lambda x: 'R$ {:,.2f}'.format(x))
+
+        
+        return [raw_datas, formatted_datas]
     
     def get_options_main(self):
         self.to_float()
@@ -62,10 +51,10 @@ class DataframeManager:
         ]
 
         df = st.session_state.df_master[visible_columns]
-
         df_main = df.groupby(['Mês'])[['Empenhado', 'Liquidado']].sum().reset_index()
         df_main["Empenhado (R$)"] = df_main["Empenhado"].map("R$ {:,.2f}".format)
         df_main["Liquidado (R$)"] = df_main["Liquidado"].map("R$ {:,.2f}".format)
+        df_main['Mês'] = df_main['Mês'].map(lambda x: formatted_months(x))
 
         return [{
             "title": {"text": ""},
@@ -75,7 +64,8 @@ class DataframeManager:
             "toolbox": {"feature": {"saveAsImage": {}}},
             "xAxis": {
                 "type": "category",
-                "boundaryGap": False,
+                "boundaryGap": False, 
+                "axisLabel": {"margin": 20 }, 
                 "data": df_main['Mês'].tolist(),
             },
             "yAxis": {"type": "value"},
@@ -103,7 +93,6 @@ class DataframeManager:
         committed = df['Empenhado'].sum()
         settled = df['Liquidado'].sum()
         balance = committed - settled
-        
         committed_formatted = "{:,.2f}".format(committed)
         settled_formatted = "{:,.2f}".format(settled)
         balance_formatted = "{:,.2f}".format(balance)
