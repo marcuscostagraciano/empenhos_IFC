@@ -6,8 +6,7 @@ from components.select_if import select_if
 from components.tabs_container import tabs_container
 
 def main():    
-    st.warning("__AVISO__: DURANTES OS TESTE PODEM HAVER ERROS DE ID(**DuplicateWidgetID**)")
-    st.write(f"# Análise de Empenhos Pagos e a Liquidar dos :green[Institutos Federais]")
+    st.title("Análise de Empenhos Pagos e a Liquidar dos :green[Institutos Federais]")
     select_if()
     tabs_container()
 

@@ -6,16 +6,15 @@ from classes.dataframe_manager import DataframeManager
 
 def by_nature(onlyTable=False):
     df_manager = DataframeManager()  
-    if not onlyTable:  
-        st.session_state.month = st.selectbox(
-            label="Selecione o mês",
-            key=41232134123,
-            index=None,
-            options=["01", "02", "03", "04"],
-            placeholder="Selecione o mês",
-        )
-        if st.session_state.month == None:
-            st.info("Selecione um mês", icon="ℹ️")
+    st.session_state.month = st.selectbox(
+        label="Selecione o mês",
+        key=f'41232134123{onlyTable}',
+        index=None,
+        options=["01", "02", "03", "04"],
+        placeholder="Selecione o mês",
+    )
+    if st.session_state.month == None:
+        st.info("Selecione um mês", icon="ℹ️")
 
     row1 = st.columns(2, gap="medium")
     with row1[0]:

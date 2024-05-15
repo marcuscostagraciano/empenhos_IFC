@@ -1,6 +1,5 @@
 import streamlit as st
-from components.main_graph import main_graph
-from components.main_table import main_table
+from components.main_chart import main_chart
 from components.tabs_childrens import tabs_childrens
 from components.indicators import indicators
 
@@ -9,10 +8,10 @@ def tabs_container():
 
     with tab1:
         indicators()
-        main_graph()
+        main_chart()
         tabs_childrens()
 
     with tab2:
         indicators()
-        main_table()
+        main_chart(onlyTable=True)
         tabs_childrens(onlyTable=True)

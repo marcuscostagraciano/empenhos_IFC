@@ -21,7 +21,7 @@ def get_options_month_detail(df):
     })
 
     return {
-        "legend": { "left": "1%", "right": "0%" },
+        "legend": { "left": "1%", "right": "2%" },
         "tooltip": {"trigger": "axis", "showContent": False},
         "dataset": {
             "source": source
@@ -45,13 +45,13 @@ def get_options_month(df):
 
     return {
         "tooltip": {"trigger": "axis"},
-        "legend": { "top": "2%", "left": "1%", "right": "0%"},
+        "legend": { "top": "2%", "left": "1%", "right": "2%"},
         "dataset": {
             "source": source
         },
         "xAxis": {"type": "category"},
         "yAxis": {"gridIndex": 0},
-        "grid": {"top": "20%", "left": "1%", "right": "0%", "containLabel": True},
+        "grid": {"top": "20%", "left": "1%", "right": "2%", "containLabel": True},
         "series": series,
     }
 
