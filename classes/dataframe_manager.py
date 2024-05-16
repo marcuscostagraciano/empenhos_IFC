@@ -59,7 +59,7 @@ class DataframeManager:
         return [{
             "title": {"text": ""},
             "tooltip": {"trigger": "axis"},
-            "legend": {"data": ["Liquidado", "Empenhado"], "left": "1%", "right": "2%"},
+            "legend": {"data": ["Liquidado", "Empenhado"], "left": "1%"},
             "grid": {"left": "1%", "right": "2%", "bottom": "3%", "containLabel": True},
             "toolbox": {"feature": {"saveAsImage": {}}},
             "xAxis": {
