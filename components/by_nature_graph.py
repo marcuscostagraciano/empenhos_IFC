@@ -31,9 +31,6 @@ def by_nature_graph(onlyTable=False):
             st.caption("## Liquidado")
             st.caption("Empenho liquidado pela Direção do IFC - Araquari")
             meses = [unformatted_months(month) for month in st.session_state.months]
-            print(meses)
             raw_datas = df_manager.get_df_month_monetary_values(meses, "Liquidado")
-            print(raw_datas)
             chart_options = get_options_month_detail(raw_datas, "Liquidado")
-            print(chart_options)
             st_echarts(chart_options, height="500px", key=f"{st.session_state}df_moth_detail_liquidated")
