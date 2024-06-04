@@ -14,9 +14,8 @@ def by_nature_graph(onlyTable=False):
         options=months,
         placeholder="Selecione o mês",
     )
-    if st.session_state.months == None:
+    if st.session_state.months == []:
         st.info("Selecione um mês", icon="ℹ️")
-
     else:
         row2 = st.columns(2, gap="medium")
         with row2[0]:

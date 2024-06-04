@@ -157,6 +157,93 @@ class DataframeManager:
             ],
         }, df_main[['Mês', 'Empenhado (R$)', 'Liquidado (R$)']]]
 
+    def get_df_by_all_nature(self):
+        self.to_float()
+        visible_columns = [
+            'Natureza Despesa',
+            'Empenhado',
+            'Liquidado',
+        ]
+
+        all_nature = st.session_state.df_master['Natureza Despesa'].unique().tolist()
+        df = st.session_state.df_master[visible_columns]
+        df_by_all_nature = df[df['Natureza Despesa'].isin(all_nature)]
+        df_by_all_nature = df_by_all_nature.groupby(['Natureza Despesa'])[['Empenhado', 'Liquidado']].sum().reset_index()
+
+        option2 = {
+            "yAxis": {
+                "type": 'category',
+                "data": df_by_all_nature['Natureza Despesa'].tolist()
+            },
+            "series": [
+                {
+                "name": 'Empenhado',
+                "type": 'bar',
+                "emphasis": {
+                    "focus": 'series'
+                },
+                "data": df_by_all_nature['Empenhado'].tolist()
+                },
+                {
+                "name": 'Liquidado',
+                "type": 'bar',
+                "emphasis": {
+                    "focus": 'series'
+                },
+                "data": df_by_all_nature['Liquidado'].tolist()
+                }
+            ]
+        }
+
+        df_by_all_nature['Empenhado'] = df_by_all_nature['Empenhado'].map('R$ {:,.2f}'.format)
+        df_by_all_nature['Liquidado'] = df_by_all_nature['Liquidado'].map('R$ {:,.2f}'.format)
+
+        return [option2, df_by_all_nature]
+    
+    def get_df_by_nature(self, nature):
+        if nature == []:
+            return [{}, pd.DataFrame()]
+        self.to_float()
+        visible_columns = [
+            'Natureza Despesa',
+            'Empenhado',
+            'Liquidado',
+        ]
+
+        df = st.session_state.df_master[visible_columns]
+        df_by_nature = df[df['Natureza Despesa'].isin(nature)]
+        df_by_nature = df_by_nature.groupby(['Natureza Despesa'])[['Empenhado', 'Liquidado']].sum().reset_index()
+
+        option = {
+            "yAxis": {
+                "type": 'category',
+                "data": df_by_nature['Natureza Despesa'].tolist()
+            },
+            "series": [
+                {
+                "name": 'Empenhado',
+                "type": 'bar',
+                "emphasis": {
+                    "focus": 'series'
+                },
+                "data": df_by_nature['Empenhado'].tolist()
+                },
+                {
+                "name": 'Liquidado',
+                "type": 'bar',
+                "emphasis": {
+                    "focus": 'series'
+                },
+                "data": df_by_nature['Liquidado'].tolist()
+                }
+            ]
+        }
+
+        df_by_nature['Empenhado'] = df_by_nature['Empenhado'].map('R$ {:,.2f}'.format)
+        df_by_nature['Liquidado'] = df_by_nature['Liquidado'].map('R$ {:,.2f}'.format)
+
+        return [option, df_by_nature]
+
     def get_indicators(self):
         self.to_float()
         df = st.session_state.df_master
