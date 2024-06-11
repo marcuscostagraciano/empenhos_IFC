@@ -9,7 +9,7 @@ def by_nature(onlyTable=False):
     months = [formatted_months(month) for month in st.session_state.df_master['Mês'].unique()]
     st.session_state.month = st.multiselect(
         label="Selecione o mês",
-        key=f'get_month_{onlyTable}',
+        key=f'get_month321_{onlyTable}',
         options=months,
         placeholder="Selecione o mês",
     )
@@ -31,9 +31,4 @@ def by_nature(onlyTable=False):
         else:
             raw_datas_df = []
 
-        if onlyTable:
-            st.table(raw_datas_df)
-        else:
-            # chart_options = df_manager.get_df_month_values("04/2024")
-            chart_options = df_manager.get_df_month_monetary_values(unformatted_months_list)
-            st_echarts(chart_options, height="500px", key=f"{st.session_state}df_moth_detail_comitted")
+        st.table(raw_datas_df)

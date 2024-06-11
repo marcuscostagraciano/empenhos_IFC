@@ -3,6 +3,7 @@ from classes.dataframe_manager import DataframeManager
 
 def indicators():
     df_manager = DataframeManager()
+    st.divider()
     st.caption("### Indicadores Gerais")
     [committed , settled, balance] = df_manager.get_indicators()
     row = st.columns(3)

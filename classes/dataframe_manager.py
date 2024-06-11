@@ -215,26 +215,38 @@ class DataframeManager:
         df_by_nature = df_by_nature.groupby(['Natureza Despesa'])[['Empenhado', 'Liquidado']].sum().reset_index()
 
         option = {
-            "yAxis": {
-                "type": 'category',
-                "data": df_by_nature['Natureza Despesa'].tolist()
+            "tooltip": {
+                "trigger": 'axis',
+                "axisPointer": {
+                    "type": 'shadow'
+                }
             },
+            "grid": {
+                "left": '3%',
+                "right": '4%',
+                "bottom": '3%',
+                "containLabel": True
+            },
+            "xAxis": [
+                {
+                    "type": 'category',
+                    "data": ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    "axisTick": {
+                        "alignWithLabel": True
+                    }
+                }
+            ],
+            "yAxis": [
+                {
+                    "type": 'value'
+                }
+            ],
             "series": [
                 {
-                "name": 'Empenhado',
-                "type": 'bar',
-                "emphasis": {
-                    "focus": 'series'
-                },
-                "data": df_by_nature['Empenhado'].tolist()
-                },
-                {
-                "name": 'Liquidado',
-                "type": 'bar',
-                "emphasis": {
-                    "focus": 'series'
-                },
-                "data": df_by_nature['Liquidado'].tolist()
+                    "name": 'Direct',
+                    "type": 'bar',
+                    "barWidth": '60%',
+                    "data": [10, 52, 200, 334, 390, 330, 220]
                 }
             ]
         }

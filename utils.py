@@ -103,7 +103,7 @@ def get_options_month(df):
             "axisLabel": {"margin": 20},
         },
         "yAxis": {"gridIndex": 0},
-        "grid": {"top": "20%", "left": "1%", "right": "2%", "containLabel": True},
+        "grid": {"top": "20%", "left": "1%", "right": "2%", "bottom": "0%", "containLabel": True},
         "series": series,
     }
 
