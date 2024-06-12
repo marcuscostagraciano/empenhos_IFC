@@ -8,7 +8,7 @@ from components.tabs_childrens import tabs_childrens
 
 def main():    
     st.title("Análise de Recursos Empenhados e Liquidados dos :green[Institutos Federais]")
-    st.caption(":blue[Version 1.0.2]")
+    st.caption(":blue[Version 1.0.4]")
     select_if()
     indicators()
     main_chart()
