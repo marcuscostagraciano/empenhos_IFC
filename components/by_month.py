@@ -4,12 +4,12 @@ from streamlit_echarts import st_echarts
 from utils import *
 from classes.dataframe_manager import DataframeManager
 
-def by_month(onlyTable=False):
+def by_month(advanced_report=False):
     df_manager = DataframeManager()   
     months = [formatted_months(month) for month in st.session_state.df_master["Mês"].unique()]
     st.session_state.months = st.multiselect(
         label="Selecione os meses",
-        key=f"get_month_{onlyTable}",
+        key=f"get_month_{advanced_report}",
         options=months,
         placeholder="Selecione o mês",
         default=months[-1],

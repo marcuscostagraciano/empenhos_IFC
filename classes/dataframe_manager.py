@@ -126,6 +126,10 @@ class DataframeManager:
         df_main["Liquidado (R$)"] = df_main["Liquidado"].map("R$ {:,.2f}".format)
         df_main['Mês'] = df_main['Mês'].map(lambda x: formatted_months(x))
 
+        total_empenhado = "R$ {:,.2f}".format(df['Empenhado'].sum())
+        total_liquidado = "R$ {:,.2f}".format(df['Liquidado'].sum())
+        df_main.loc[len(df_main)] = ['Total', total_empenhado, total_liquidado, total_empenhado, total_liquidado]
+
         return [{
             "title": {"text": ""},
             "tooltip": {"trigger": "axis"},
@@ -195,12 +199,16 @@ class DataframeManager:
             ]
         }
 
-        df_by_all_nature['Empenhado'] = df_by_all_nature['Empenhado'].map('R$ {:,.2f}'.format)
-        df_by_all_nature['Liquidado'] = df_by_all_nature['Liquidado'].map('R$ {:,.2f}'.format)
+        df_by_all_nature['Empenhado (R$)'] = df_by_all_nature['Empenhado'].map('R$ {:,.2f}'.format)
+        df_by_all_nature['Liquidado (R$)'] = df_by_all_nature['Liquidado'].map('R$ {:,.2f}'.format)
+        
+        total_empenhado = "R$ {:,.2f}".format(df_by_all_nature['Empenhado'].sum())
+        total_liquidado = "R$ {:,.2f}".format(df_by_all_nature['Liquidado'].sum())
+        df_by_all_nature.loc[len(df_by_all_nature)] = ['Total', total_empenhado, total_liquidado, total_empenhado, total_liquidado]
 
-        return [option2, df_by_all_nature]
+        return [option2, df_by_all_nature[['Natureza Despesa', 'Empenhado (R$)', 'Liquidado (R$)']]]
     
-    def get_df_by_nature(self, nature, tipo_em_li):
+    def get_df_by_nature(self, nature, type_value='Empenhado'):
         self.to_float()
         visible_columns = [
             'Natureza Despesa',
@@ -224,9 +232,9 @@ class DataframeManager:
         df_by_nature_test_2 = df[df['Natureza Despesa'].isin(nature)]
         df_by_nature_test_2 = df_by_nature_test_2.groupby(['Natureza Despesa Detalhada'])[['Empenhado', 'Liquidado']].sum().reset_index()
 
-        df = st.session_state.df_master[['Natureza Despesa', 'Natureza Despesa Detalhada', 'Mês', 'Empenhado', 'Liquidado']]
+        df = st.session_state.df_master[['Natureza Despesa', 'Natureza Despesa Detalhada', 'Métrica', 'Empenhado', 'Liquidado']]
         df_by_nature_test_3 = df[df['Natureza Despesa'].isin(nature)].reset_index()
-        df_by_nature_test_3 = df_by_nature_test_3[['Natureza Despesa Detalhada', 'Mês', 'Empenhado', 'Liquidado']]
+        df_by_nature_test_3 = df_by_nature_test_3[['Natureza Despesa Detalhada', 'Métrica', 'Empenhado', 'Liquidado']]
 
         option2 = {
             "title": { 
@@ -309,7 +317,7 @@ class DataframeManager:
             },
             "yAxis": {
                 "type": 'category',
-                "data": df_by_nature_test_3['Mês'].unique().tolist()
+                "data": df_by_nature_test_3['Métrica'].unique().tolist()
             },
             "grid": {
                 "left": '3%',
@@ -322,7 +330,7 @@ class DataframeManager:
         }
 
         for natureza in df_by_nature_test_3['Natureza Despesa Detalhada'].unique().tolist():
-            data = df_by_nature_test_3[df_by_nature_test_3['Natureza Despesa Detalhada'] == natureza][tipo_em_li].tolist()
+            data = df_by_nature_test_3[df_by_nature_test_3['Natureza Despesa Detalhada'] == natureza][type_value].tolist()
             series = {
             "name": natureza,
             "type": 'bar',  # Changed to bar

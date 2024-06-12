@@ -1,24 +1,29 @@
 import streamlit as st
 
-def select_if():
-    st.write(
-        """
-        Este projeto de pesquisa visa analisar os dados financeiros do IFC Campus Araquari, concentrando-se nos empenhos pagos e a liquidar. O objetivo é compreender os padrões de gastos, identificar áreas prioritárias e avaliar a eficiência no uso dos recursos financeiros para auxiliar na gestão e no planejamento orçamentário do campus.
-        """
-    )
-    layout_cols = st.columns((1, 1, 2))
-
-    with layout_cols[0]:
-        state_option = st.selectbox(
-            f"Selecione o Estado",
-            # ["SC", "RS", "PR", "..."],
-            ["SC", "..."],
+def select_if(advanced_report=False):
+    if advanced_report:
+        st.write(
+            """
+            Este projeto de pesquisa visa analisar os dados financeiros do IFC Campus Araquari, concentrando-se nos empenhos pagos e a liquidar. O objetivo é compreender os padrões de gastos, identificar áreas prioritárias e avaliar a eficiência no uso dos recursos financeiros para auxiliar na gestão e no planejamento orçamentário do campus.
+            """
         )
-
-    with layout_cols[1]:
-        campus_option = st.selectbox(
-            f"Selecione o Campus",
-            # ["Araquari", "Camboriú", "Sombrio", "Videira", "..."],
-            ["Araquari", "..."],
+    else:
+        st.write(
+            """
+            Este projeto de pesquisa visa analisar os dados financeiros dos Institutos Federais, concentrando-se nos empenhos pagos e a liquidar. O objetivo é compreender os padrões de gastos, identificar áreas prioritárias e avaliar a eficiência no uso dos recursos financeiros para auxiliar na gestão e no planejamento orçamentário do campus.
+            """
         )
+        layout_cols = st.columns((1, 1, 2))
+
+        with layout_cols[0]:
+            state_option = st.selectbox(
+                f"Selecione o Estado",
+                ["SC", "..."],
+            )
+
+        with layout_cols[1]:
+            campus_option = st.selectbox(
+                f"Selecione o Campus",
+                ["Araquari", "..."],
+            )
     

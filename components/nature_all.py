@@ -1,11 +1,9 @@
 import streamlit as st
-from utils import *
 from classes.dataframe_manager import DataframeManager
 from streamlit_echarts import st_echarts
 
-def nature_all(onlyTable=False):
+def nature_all(advanced_report=False):
     df_manager = DataframeManager()
-    months = [formatted_months(month) for month in st.session_state.df_master["Mês"].unique()]
     [option, get_dataframe_by_nature] = df_manager.get_df_by_all_nature()
     options = {
         **option,
@@ -36,10 +34,10 @@ def nature_all(onlyTable=False):
         }
     }
 
-    if onlyTable:
+    if advanced_report:
         st.table(get_dataframe_by_nature)
     else:
         st.caption("##")
         st.caption("### Total de Recursos Empenhados e Liquidados por Natureza de Despesa")
-        st_echarts(options=options, height="500px", key=f'{onlyTable}_id_dessa_porra')
+        st_echarts(options=options, height="500px", key=f'{advanced_report}_id_dessa_porra')
 
