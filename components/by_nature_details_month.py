@@ -19,4 +19,4 @@ def by_nature_details_month(advanced_report=False):
         if type == None:
             st.info("Nenhuma Natureza Despesa selecionada", icon="ℹ️")
         else:
-            st_echarts(options=option3, height="500px")
+            st_echarts(options=option3, height="600px")

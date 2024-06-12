@@ -323,7 +323,7 @@ class DataframeManager:
                 "left": '3%',
                 "right": '3%',
                 "bottom": '3%',
-                "top": '20%',
+                "top": '30%',
                 "containLabel": True
             },
             "series": []
