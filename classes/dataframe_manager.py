@@ -200,7 +200,7 @@ class DataframeManager:
 
         return [option2, df_by_all_nature]
     
-    def get_df_by_nature(self, nature):
+    def get_df_by_nature(self, nature, tipo_em_li):
         self.to_float()
         visible_columns = [
             'Natureza Despesa',
@@ -322,7 +322,7 @@ class DataframeManager:
         }
 
         for natureza in df_by_nature_test_3['Natureza Despesa Detalhada'].unique().tolist():
-            data = df_by_nature_test_3[df_by_nature_test_3['Natureza Despesa Detalhada'] == natureza]['Empenhado'].tolist()
+            data = df_by_nature_test_3[df_by_nature_test_3['Natureza Despesa Detalhada'] == natureza][tipo_em_li].tolist()
             series = {
             "name": natureza,
             "type": 'bar',  # Changed to bar

@@ -13,8 +13,8 @@ def main_chart(onlyTable=False):
 
     
     df_master = st.session_state.df_master
-    committed = df_master['Empenhado'].sum()
     settled = df_master['Liquidado'].sum()
+    committed = df_master['Empenhado'].sum() - settled
 
     if onlyTable:
         st.table(df)
@@ -29,7 +29,7 @@ def main_chart(onlyTable=False):
                 {
                     "name": "Soma Total (R$)",
                     "type": "pie",
-                    "radius": ['30%', '60%'],
+                    "radius": '60%',
                     "center": ["90%", "50%"],
                     "data": [
                         {"value":  settled, "name": "Liquidado"},
@@ -38,14 +38,14 @@ def main_chart(onlyTable=False):
                     "emphasis": {
                         "label": {
                             "show": True,
-                            "fontSize": 18,
-                            "fontWeight": 'bold'
                         }
                     },
                     "label": {
                         "show": False,
-                        "position": 'center',
-                        "formatter": "{d}%"
+                        "formatter": "{d}%",
+                        "fontSize": 15,
+                        "fontWeight": "bold",
+                        "position": 'center'
                     }
                 }
             ],

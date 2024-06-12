@@ -13,11 +13,21 @@ def by_nature_details(onlyTable=False):
         key=f'{onlyTable}select_nature', 
         index=None
     )
+    tipo = st.selectbox(
+        label="Selecione a Natureza da Despesa", 
+        options=["Empenhado", "Liquidado"], 
+        key=f'{onlyTable}select_nature2', 
+        index=None
+    )
     if st.session_state.nature == None:
         st.info("Nenhuma Natureza Despesa selecionada", icon="ℹ️")
     else:
-        option2, option3, df_by_nature_test_1, df_by_nature_test_2, df_by_nature_test_3 = df_manager.get_df_by_nature(st.session_state.nature)
+        option2, option3, df_by_nature_test_1, df_by_nature_test_2, df_by_nature_test_3 = df_manager.get_df_by_nature(st.session_state.nature, tipo)
         st_echarts(options=option2, height="500px")
         if onlyTable:
             st.table(df_by_nature_test_2)
-            st_echarts(options=option3, height="500px")
+            
+            if tipo == None:
+                st.info("Nenhuma Natureza Despesa selecionada", icon="ℹ️")
+            else:
+                st_echarts(options=option3, height="500px")

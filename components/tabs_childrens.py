@@ -8,7 +8,7 @@ def tabs_childrens(onlyTable=False):
 
     with tab1:
         by_month()
-        by_month2(onlyTable=onlyTable)
+        # by_month2(onlyTable=onlyTable)
     with tab2:
         by_nature_details(onlyTable=onlyTable)
     
