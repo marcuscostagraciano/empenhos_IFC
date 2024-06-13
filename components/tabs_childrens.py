@@ -1,19 +1,14 @@
 import streamlit as st
-from utils import *
 from components.by_month import by_month
-from components.by_nature import by_nature
-from components.by_nature_graph import by_nature_graph
 from components.by_nature_details import by_nature_details
+from components.by_nature_details_month import by_nature_details_month
 
-def tabs_childrens(onlyTable=False):
-    tab1, tab2, tab3 = st.tabs(['Por Mês', 'Por Natureza', 'Por Natureza Detalhada'])
+def tabs_childrens(advanced_report=False):
+    tab1, tab2 = st.tabs(['Buscar Por Mês', 'Buscar por Natureza'])
 
     with tab1:
-        by_month(onlyTable=onlyTable)
+        by_month(advanced_report=advanced_report)
     with tab2:
-        if (onlyTable):
-            by_nature(onlyTable=onlyTable)
-        else:
-            by_nature_graph(onlyTable=onlyTable)
-    with tab3:
-        by_nature_details(onlyTable=onlyTable)
+        by_nature_details(advanced_report=advanced_report)
+        by_nature_details_month(advanced_report=advanced_report)
+    
