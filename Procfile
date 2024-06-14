@@ -1,1 +1,1 @@
-web: streamlit run home.py
+web: streamlit run home.py --server.port 5000
