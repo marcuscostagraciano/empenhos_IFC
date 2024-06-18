@@ -4,13 +4,15 @@ def select_if(advanced_report=False):
     if advanced_report:
         st.write(
             """
-            Este projeto de pesquisa visa analisar os dados financeiros do IFC Campus Araquari, concentrando-se nos empenhos pagos e a liquidar. O objetivo é compreender os padrões de gastos, identificar áreas prioritárias e avaliar a eficiência no uso dos recursos financeiros para auxiliar na gestão e no planejamento orçamentário do campus.
+            Este projeto tem por objetivo possibilitar à comunidade o acompanhamento da execução do orçamento do campus.
+            As informações são apresentadas considerando, ao longo do tempo, os valores de Despesas Empenhadas e Despesas Liquidadas.
             """
         )
     else:
         st.write(
             """
-            Este projeto de pesquisa visa analisar os dados financeiros dos Institutos Federais, concentrando-se nos empenhos pagos e a liquidar. O objetivo é compreender os padrões de gastos, identificar áreas prioritárias e avaliar a eficiência no uso dos recursos financeiros para auxiliar na gestão e no planejamento orçamentário do campus.
+            Este projeto tem por objetivo possibilitar à comunidade o acompanhamento da execução do orçamento do campus.
+            As informações são apresentadas considerando, ao longo do tempo, os valores de Despesas Empenhadas e Despesas Liquidadas.
             """
         )
         layout_cols = st.columns((1, 1, 2))
