@@ -7,7 +7,7 @@ from components.nature_all import nature_all
 from components.tabs_childrens import tabs_childrens
 
 def main():    
-    st.title("Análise de Recursos Empenhados e Liquidados dos :green[Institutos Federais]")
+    st.title("Acompanhamento da execução orçamentária do :green[IFC - Campus Araquari]")
     st.caption(":blue[Version 1.0.4]")
     select_if()
     indicators()
