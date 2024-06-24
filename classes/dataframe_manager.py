@@ -358,7 +358,7 @@ class DataframeManager:
         df = st.session_state.df_master
         committed = df['Empenhado'].sum()
         settled = df['Liquidado'].sum()
-        balance = (committed - settled) * -1
+        balance = (committed - settled)
         committed_formatted = "{:,.2f}".format(committed)
         settled_formatted = "{:,.2f}".format(settled)
         balance_formatted = "{:,.2f}".format(balance)
