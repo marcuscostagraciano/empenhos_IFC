@@ -8,7 +8,7 @@ from components.tabs_childrens import tabs_childrens
 
 def main():    
     st.title("Acompanhamento da execução orçamentária do :green[IFC - Campus Araquari]")
-    st.caption(":blue[Version 1.0.4]")
+    st.caption(":blue[Version 1.0.5]")
     select_if()
     indicators()
     main_chart()
@@ -22,7 +22,7 @@ def main():
 
 if __name__ == "__main__":
     st.set_page_config(
-        page_title="IF - Análise de Recursos Empenhados e Liquidados", 
+        page_title="Acompanhamento da execução orçamentária do IFC - Campus Araquari", 
         page_icon=":chart_with_upwards_trend:",
         layout="wide",
         initial_sidebar_state="collapsed",
