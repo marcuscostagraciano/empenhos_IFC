@@ -18,7 +18,7 @@ export const useAppStore = defineStore("app",
           state.theme = theme;
         }
 
-        const fetchCharts = async () => {
+        const getCharts = async () => {
             state.loading = true;
             try {
               state.charts = await AppService.getCharts();
@@ -35,6 +35,7 @@ export const useAppStore = defineStore("app",
             isDark,
             isLoading,
             setTheme,
+            getCharts,
         };
     }
 )
