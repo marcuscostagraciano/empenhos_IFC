@@ -1,10 +1,15 @@
+<script setup>
+const school = ref(['Araquari'])
+const state = ref(['Santa Catarina'])
+</script>
+
 <template>
   <header class="mx-16 mt-16 border-b-thin pb-2">
+    <NavComp />
     <h1 class="text-h3 font-weight-bold">
       Painel de Transparência Financeira do
       <span class="text-green-darken-3">IFC - Campus Araquari</span>
     </h1>
-    <!-- <p class="pb-4 pt-2 text-primary">Version {{ version }}</p> -->
     <p class="py-6 text-grey">
       Este projeto tem por objetivo possibilitar à comunidade o acompanhamento
       da execução do orçamento do campus. As informações são apresentadas
@@ -31,9 +36,3 @@
     </v-row>
   </header>
 </template>
-
-<script lang="ts" setup>
-  // const version = '1.0.5'
-  const school = ref<string[]>(['Araquari'])
-  const state = ref<string[]>(['Santa Catarina'])
-</script>
