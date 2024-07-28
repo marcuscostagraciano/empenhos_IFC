@@ -1,5 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from charts import DataframeManager
 
 app = FastAPI()
 
@@ -15,10 +16,25 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+df_manager = DataframeManager()
+print(df_manager.get_global_indicators())
+print(df_manager.main_chart())
+
 @app.get("/")
 def read_root():
     return {"message": "OLÁ MUNDO"}
 
 @app.get("/charts")
 def read_root():
-    return {"message": "o fastApi já está conectado com o vue"}
+    try:
+        return {
+            "results": {
+                "globalIndicators": df_manager.get_global_indicators(),
+                "mainChart": df_manager.main_chart(),
+            }
+        }
+    except Exception as e:
+        # Log the exception (you can use logging module or print)
+        print(f"An error occurred: {e}")
+        # Raise an HTTPException with status code 500
+        raise HTTPException(status_code=500, detail="Internal Server Error")

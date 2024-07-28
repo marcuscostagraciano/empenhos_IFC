@@ -8,11 +8,23 @@ export const useAppStore = defineStore("app",
             loading: false,
             error: null,
             theme: "light",
-            charts: [],
+            datas: {
+              mainChart: [],
+              globalIndicators: {
+                committed: 0,
+                settled: 0,
+                balance: 0
+              }
+            },
         });
         const isDark = computed(() => state.theme === 'dark');
         const themeColor = computed(() => state.theme);
         const isLoading = computed(() => state.loading);
+        const committed = computed(() => state.datas.globalIndicators.committed);
+        const settled = computed(() => state.datas.globalIndicators.settled);
+        const balance = computed(() => state.datas.globalIndicators.balance);
+        const mainChart = computed(() => state.datas.mainChart[0]);
+        const mainDataframe = computed(() => state.datas.mainChart[1]);
 
         const setTheme = (theme) => {
           state.theme = theme;
@@ -21,7 +33,7 @@ export const useAppStore = defineStore("app",
         const getCharts = async () => {
             state.loading = true;
             try {
-              state.charts = await AppService.getCharts();
+              state.datas = await AppService.getCharts();
             } catch (error) {
               state.error = error;
             } finally {
@@ -34,6 +46,11 @@ export const useAppStore = defineStore("app",
             themeColor,
             isDark,
             isLoading,
+            committed,
+            settled,
+            balance,
+            mainChart,
+            mainDataframe,
             setTheme,
             getCharts,
         };

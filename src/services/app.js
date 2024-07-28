@@ -4,8 +4,7 @@ class AppService {
     async getCharts() {
         try {
             const { data } = await api.get('/charts');
-            console.log("data", data.message);
-            return data.message;
+            return data.results;
         } catch (error) {
             console.log("error in get charts", error);
             throw error;

@@ -1,7 +1,7 @@
 <template>
   <div class="mx-4 mt-16">
     <p class="text-caption position-fixed top-0 left-0 pa-2 text-red">
-      {{ appStore.state.charts }}
+      {{ appStore.state.datas }}
     </p>
     <HeaderComp />
     <GlobalIndicators />
