@@ -1,10 +1,12 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from charts import DataframeManager
+import uvicorn
 
 app = FastAPI()
 
 origins = [
+    "http://127.0.0.1:3000",
     "http://localhost:3000",
 ]
 
@@ -38,3 +40,6 @@ def read_root():
         print(f"An error occurred: {e}")
         # Raise an HTTPException with status code 500
         raise HTTPException(status_code=500, detail="Internal Server Error")
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=8000)

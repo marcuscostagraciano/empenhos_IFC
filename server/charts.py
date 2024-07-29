@@ -45,61 +45,20 @@ class DataframeManager:
 
         df_main.loc[len(df_main)] = ['Total', total_empenhado, total_liquidado, total_empenhado, total_liquidado]
 
-        options = {
-            "title": {"text": ""},
-            "tooltip": {"trigger": "axis"},
-            "legend": {"data": ["Liquidado", "Empenhado"], "left": "1%"},
-            "grid": {"left": "1%", "right": "2%", "bottom": "3%", "containLabel": True},
-            "toolbox": {"feature": {"saveAsImage": {}}},
-            "xAxis": {
-                "type": "category",
-                "boundaryGap": False,
-                "axisLabel": {"margin": 20},
-                "data": df_main['MÃªs'].tolist(),
-            },
-            "yAxis": {"type": "value"},
-            "grid": {"left": "1%", "right": "22.5%", "bottom": "3%", "containLabel": True},
-            "series": [
+        return {
+            "lines": [
                 {
-                    "name": "Liquidado",
-                    "type": "line",
-                    "stack": "Liquidado",
-                    "smooth": True,
-                    "data": df_main['Liquidado'].tolist(),
+                    "data": df_main['Liquidado'].tolist()[0:-1],
                 },
                 {
-                    "name": "Empenhado",
-                    "type": "line",
-                    "stack": "Empenhado",
-                    "smooth": True,
-                    "data": df_main['Empenhado'].tolist(),
+                    "data": df_main['Empenhado'].tolist()[0:-1],
                 },
-                {
-                    "name": "Soma Total (R$)",
-                    "type": "pie",
-                    "radius": '60%',
-                    "center": ["90%", "50%"],
-                    "data": [
-                        {"value": self.df_master['Liquidado'].sum(), "name": "Liquidado"},
-                        {"value": self.df_master['Empenhado'].sum(), "name": "Empenhado"},
-                    ],
-                    "emphasis": {
-                        "label": {
-                            "show": True,
-                        }
-                    },
-                    "label": {
-                        "show": False,
-                        "formatter": "{d}%",
-                        "fontSize": 15,
-                        "fontWeight": "bold",
-                        "position": 'center'
-                    }
-                }
             ],
+            "pie": {
+                "data": [self.df_master['Empenhado'].sum(), self.df_master['Liquidado'].sum()],
+            },
+            "dataframe": df_main[['MÃªs', 'Empenhado (R$)', 'Liquidado (R$)']],
         }
-
-        return [options, df_main[['MÃªs', 'Empenhado (R$)', 'Liquidado (R$)']]]
 
     def to_float(self):
         if self.df_master['Empenhado'].apply(lambda x: isinstance(x, str)).any():

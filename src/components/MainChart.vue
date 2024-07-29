@@ -5,7 +5,8 @@ import { LineChart, PieChart } from 'echarts/charts'
 import { DatasetComponent, GridComponent, LegendComponent, TooltipComponent } from 'echarts/components'
 import VChart, { THEME_KEY } from 'vue-echarts'
 import { useAppStore } from '../stores/app'
-import { onMounted } from 'vue'
+import { onMounted, reactive } from 'vue'
+import app from '@/services/app'
 
 const appStore = useAppStore()
 
@@ -24,22 +25,6 @@ use([
 ])
 
 provide(THEME_KEY, 'default')
-
-// const onEvents = {
-//   updateAxisPointer: event => {
-//     const xAxisInfo = event.axesInfo[0]
-//     if (xAxisInfo) {
-//       const dimension = xAxisInfo.value + 1
-//       option.series.forEach(serie => {
-//         if (serie.id === 'pie') {
-//           serie.label.formatter = `{b}: {@[${dimension}]} ({d}%)`
-//           serie.encode.value = dimension
-//           serie.encode.tooltip = dimension
-//         }
-//       })
-//     }
-//   },
-// }
 </script>
 
 <template>

@@ -1,0 +1,20 @@
+services:
+  frontend:
+    build: .
+    restart: always
+    ports:
+      - "3000:3000"
+    networks:
+      - nestnet
+
+  backend:
+    build: ./server
+    restart: always
+    ports:
+      - "8000:8000"
+    networks:
+      - nestnet
+
+networks:
+  nestnet:
+    driver: bridge
