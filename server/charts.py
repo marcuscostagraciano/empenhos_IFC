@@ -24,7 +24,7 @@ class DataframeManager:
     def main_chart(self):
         self.to_float()
         visible_columns = [
-            'MÃªs',
+            'mes',
             'Empenhado',
             'Liquidado',
         ]
@@ -35,10 +35,10 @@ class DataframeManager:
         if missing_columns:
             raise KeyError(f"Colunas ausentes no DataFrame: {missing_columns}")
 
-        df_main = self.df_master[visible_columns].groupby(['MÃªs'])[['Empenhado', 'Liquidado']].sum().reset_index()
+        df_main = self.df_master[visible_columns].groupby(['mes'])[['Empenhado', 'Liquidado']].sum().reset_index()
         df_main["Empenhado (R$)"] = df_main["Empenhado"].map("R$ {:,.2f}".format)
         df_main["Liquidado (R$)"] = df_main["Liquidado"].map("R$ {:,.2f}".format)
-        df_main['MÃªs'] = df_main['MÃªs'].map(lambda x: formatted_months(x))
+        df_main['mes'] = df_main['mes'].map(lambda x: formatted_months(x))
 
         total_empenhado = "R$ {:,.2f}".format(self.df_master['Empenhado'].sum())
         total_liquidado = "R$ {:,.2f}".format(self.df_master['Liquidado'].sum())
@@ -46,18 +46,49 @@ class DataframeManager:
         df_main.loc[len(df_main)] = ['Total', total_empenhado, total_liquidado, total_empenhado, total_liquidado]
 
         return {
-            "lines": [
-                {
-                    "data": df_main['Liquidado'].tolist()[0:-1],
-                },
-                {
-                    "data": df_main['Empenhado'].tolist()[0:-1],
-                },
-            ],
-            "pie": {
-                "data": [self.df_master['Empenhado'].sum(), self.df_master['Liquidado'].sum()],
-            },
-            "dataframe": df_main[['MÃªs', 'Empenhado (R$)', 'Liquidado (R$)']],
+            "line1": df_main['Empenhado'].tolist()[0:-1],
+            "line2": df_main['Liquidado'].tolist()[0:-1],
+            "pie": [self.df_master['Empenhado'].sum(), self.df_master['Liquidado'].sum()],
+            "dataframe": [{
+                "month": df_main['mes'].tolist()[i],
+                "committed": df_main['Empenhado (R$)'].tolist()[i], 
+                "liquidated": df_main['Liquidado (R$)'].tolist()[i]
+            } for i in range(len(df_main))],
+        }
+    
+    def all_natures_chart(self):
+        self.to_float()
+        visible_columns = [
+            'Natureza Despesa',
+            'Empenhado',
+            'Liquidado',
+        ]
+
+        all_nature = self.df_master['Natureza Despesa'].unique().tolist()
+        df = self.df_master[visible_columns]
+        df_by_all_nature = df[df['Natureza Despesa'].isin(all_nature)]
+        df_by_all_nature = df_by_all_nature.groupby(['Natureza Despesa'])[['Empenhado', 'Liquidado']].sum().reset_index()
+
+        option = {
+            "bar1": df_by_all_nature['Empenhado'].tolist(),
+            "bar2": df_by_all_nature['Liquidado'].tolist(),
+            "yAxis": df_by_all_nature['Natureza Despesa'].tolist(),
+        }
+
+        df_by_all_nature['Empenhado (R$)'] = df_by_all_nature['Empenhado'].map('R$ {:,.2f}'.format)
+        df_by_all_nature['Liquidado (R$)'] = df_by_all_nature['Liquidado'].map('R$ {:,.2f}'.format)
+        
+        total_empenhado = "R$ {:,.2f}".format(df_by_all_nature['Empenhado'].sum())
+        total_liquidado = "R$ {:,.2f}".format(df_by_all_nature['Liquidado'].sum())
+        df_by_all_nature.loc[len(df_by_all_nature)] = ['Total', total_empenhado, total_liquidado, total_empenhado, total_liquidado]
+
+        return {
+            **option,
+            "dataframe": [{
+                "nature": df_by_all_nature['Natureza Despesa'].tolist()[i],
+                "committed": df_by_all_nature['Empenhado (R$)'].tolist()[i], 
+                "liquidated": df_by_all_nature['Liquidado (R$)'].tolist()[i]
+            } for i in range(len(df_by_all_nature))],
         }
 
     def to_float(self):

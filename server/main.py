@@ -33,6 +33,7 @@ def read_root():
             "results": {
                 "globalIndicators": df_manager.get_global_indicators(),
                 "mainChart": df_manager.main_chart(),
+                "allNaturesChart": df_manager.all_natures_chart(),
             }
         }
     except Exception as e:
