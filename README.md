@@ -1,6 +1,6 @@
 # fabricaBI_IFC
 
-## How-to run this project
+## How-to run this project (local)
 
 1. Git clone the repo
 2. "Cd" to the git clone location
