@@ -1,5 +1,6 @@
 import streamlit as st
 
+
 def select_if(advanced_report=False):
     if advanced_report:
         st.write(
@@ -28,8 +29,11 @@ def select_if(advanced_report=False):
                 f"Selecione o Campus",
                 ["Araquari", "..."],
             )
-    
-    st.markdown('''<div style="color: #888; font-size: .8em;position: absolute; right: 0; bottom: -2em;">
+
+    st.markdown(
+        """<div style="color: #888; font-size: .8em;position: absolute; right: 0; bottom: -2em;">
         Professor Responsavel: <a href="www.github.com/ldmfabio" style="padding-right: 1em">Fábio Longo de Moura</a> 
         Aluno Responsavel: <a href="www.github.com/mateus-lopes">Mateus Lopes Albano</a>
-    </div>''', unsafe_allow_html=True)
+    </div>""",
+        unsafe_allow_html=True,
+    )

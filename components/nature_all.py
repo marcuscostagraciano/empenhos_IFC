@@ -1,6 +1,8 @@
 import streamlit as st
-from classes.dataframe_manager import DataframeManager
 from streamlit_echarts import st_echarts
+
+from classes.dataframe_manager import DataframeManager
+
 
 def nature_all(advanced_report=False):
     df_manager = DataframeManager()
@@ -8,36 +10,34 @@ def nature_all(advanced_report=False):
     options = {
         **option,
         "title": {
-            "text": '',
+            "text": "",
         },
         "tooltip": {
-            "trigger": 'axis',
-            "axisPointer": {
-                "type": 'shadow'
-            },
+            "trigger": "axis",
+            "axisPointer": {"type": "shadow"},
         },
         "legend": {
-            "data": ['Empenhado', 'Liquidado'],
-            "left": '0%',
-            "top": '1%',
+            "data": ["Empenhado", "Liquidado"],
+            "left": "0%",
+            "top": "1%",
         },
         "grid": {
-            "left": '3%',
-            "right": '4%',
-            "bottom": '3%',
-            "top": '8%',
-            "containLabel": True
+            "left": "3%",
+            "right": "4%",
+            "bottom": "3%",
+            "top": "8%",
+            "containLabel": True,
         },
-        "xAxis": {
-            "type": 'value',
-            "boundaryGap": [0, 0.01]
-        }
+        "xAxis": {"type": "value", "boundaryGap": [0, 0.01]},
     }
 
     if advanced_report:
         st.table(get_dataframe_by_nature)
     else:
         st.caption("##")
-        st.caption("### Total de Recursos Empenhados e Liquidados por Natureza de Despesa")
-        st_echarts(options=options, height="500px", key=f'{advanced_report}_id_dessa_porra')
-
+        st.caption(
+            "### Total de Recursos Empenhados e Liquidados por Natureza de Despesa"
+        )
+        st_echarts(
+            options=options, height="500px", key=f"{advanced_report}_id_dessa_porra"
+        )
