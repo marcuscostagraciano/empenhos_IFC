@@ -1,28 +1,32 @@
 import random
 import uuid
+from typing import Final
 
 import altair as alt
 import pandas as pd
 import streamlit as st
 
 
-def get_options_month_detail(df, tipo):
+def get_options_month_detail(df: pd.DataFrame, tipo: str) -> dict:
+    """
+    Função usada para retornar as configurações necessárias para "plotar" o gráfico de acordo com o tipo do dado.
+
+    Args:
+        df (pd.DataFrame): DataFrame contendo os dados à serem selecionados.
+        tipo (str): Tipo do dado à ser selecionado ("Empenhado" ou "Liquidado").
+
+    Returns:
+        dict: Configurações usadas para "plotar" o gráfico.
+    """
+    TIPOS_VALIDOS: Final[tuple[str]] = ("Empenhado", "Liquidado")
+    coluna_selecionada: str = tipo.capitalize()
     series: list = []
-    if tipo == "Empenhado":
+
+    if coluna_selecionada in TIPOS_VALIDOS:
         data = [
             {
                 "value": df.loc[
-                    df["Natureza Despesa"] == natureza_despesa, "Empenhado"
-                ].values[0],
-                "name": natureza_despesa,
-            }
-            for natureza_despesa in df["Natureza Despesa"].unique()
-        ]
-    elif tipo == "Liquidado":
-        data = [
-            {
-                "value": df.loc[
-                    df["Natureza Despesa"] == natureza_despesa, "Liquidado"
+                    df["Natureza Despesa"] == natureza_despesa, f"{coluna_selecionada}"
                 ].values[0],
                 "name": natureza_despesa,
             }
@@ -46,7 +50,6 @@ def get_options_month_detail(df, tipo):
             "data": data,
         }
     )
-
     return {
         "legend": {"left": "1%", "right": "2%"},
         "tooltip": {"trigger": "axis", "showContent": False},
@@ -54,7 +57,22 @@ def get_options_month_detail(df, tipo):
     }
 
 
-def unformatted_months(month):
+def unformatted_months(month: str) -> str:
+    """
+    Função usada para retornar Número do Mês/Ano tendo como base o nome do mês.
+
+    Args:
+    -----
+        month (str): Nome do mês.
+
+    Returns:
+    -----
+        str: Número do mês/Ano.
+
+    Examples
+    -----
+    >>> unformatted_months("Janeiro") = "01/2024"
+    """
     dict = {
         "Janeiro": "01/2024",
         "Fevereiro": "02/2024",
@@ -73,7 +91,22 @@ def unformatted_months(month):
     return dict[month]
 
 
-def formatted_months(month):
+def formatted_months(month: str) -> str:
+    """
+    Função usada para retornar nome do mês tendo como base o Número do Mês/Ano.
+
+    Args:
+    -----
+        month (str): Número do mês/Ano.
+
+    Returns:
+    -----
+        str: Nome do mês.
+
+    Examples
+    -----
+    >>> unformatted_months("01/2024") = "Janeiro"
+    """
     dict = {
         "01/2024": "Janeiro",
         "02/2024": "Fevereiro",
@@ -92,7 +125,7 @@ def formatted_months(month):
     return dict[month]
 
 
-def get_options_month(df):
+def get_options_month(df: pd.DataFrame) -> dict:
     df.columns = [
         formatted_months(col) if col != "Natureza Despesa" else col
         for col in df.columns
