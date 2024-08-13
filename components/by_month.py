@@ -17,6 +17,7 @@ def by_month(advanced_report=False):
     ]
     stop_time = time()
     print(f"Tempo gasto with MONTHS: {stop_time - start_time}")
+    st.write(months)
 
     st.session_state.months = st.multiselect(
         label="Selecione os meses",
@@ -35,11 +36,9 @@ def by_month(advanced_report=False):
         ]
         df = df_manager.get_df_month_values(unformatted_months_list)
         raw_datas.append(df)
-        # print(raw_datas)
 
         if len(raw_datas) > 0:
             raw_datas_df = pd.concat(raw_datas)
-            print(f"{raw_datas_df = }")
         else:
             raw_datas_df = []
 
@@ -67,19 +66,23 @@ def by_month(advanced_report=False):
 
         start_time = time()
         with row2[1]:
-            st.caption("## Liquidado")
-            st.caption("Empenho liquidado pela Direção do IFC - Araquari")
-            meses = [unformatted_months(month) for month in st.session_state.months]
-            raw_datas = df_manager.get_df_month_monetary_values(meses, "Liquidado")
-            chart_options = get_options_month_detail(raw_datas, "Liquidado")
-            start_time = time()
-            st_echarts(
-                chart_options,
-                height="500px",
-                key=f"{st.session_state}df_moth_detail_liquidated",
-            )
-            stop_time = time()
-            print(f"Tempo gasto plotando Gráfico 'liquidado': {stop_time - start_time}")
+            cria_grafico(df_manager, "liquidado")
 
-        stop_time = time()
-        print(f"Tempo gasto Gráfico 'liquidado': {stop_time - start_time}")
+
+def cria_grafico(df_manager: DataframeManager, tipo_dado: str) -> None:
+    tipo_dado_maiusculo: str = tipo_dado.capitalize()
+    st.caption(f"## {tipo_dado_maiusculo}")
+
+    st.caption(f"Empenho {tipo_dado} pela Direção do IFC - Araquari")
+    meses = [unformatted_months(month) for month in st.session_state.months]
+
+    raw_datas = df_manager.get_df_month_monetary_values(meses, tipo_dado_maiusculo)
+    chart_options = get_options_month_detail(raw_datas, tipo_dado_maiusculo)
+    start_time = time()
+    st_echarts(
+        chart_options,
+        height="500px",
+        key=f"{st.session_state}df_moth_detail_liquidated",
+    )
+    stop_time = time()
+    print(f"Tempo gasto plotando Gráfico 'liquidado': {stop_time - start_time}\n")
