@@ -1,46 +1,49 @@
-import pandas as pd
-import altair as alt
-import streamlit as st
-import uuid
 import random
+import uuid
+
+import altair as alt
+import pandas as pd
+import streamlit as st
 
 
 def get_options_month_detail(df, tipo):
-    series = []
+    series: list = []
     if tipo == "Empenhado":
         data = [
-            { 
-                'value': df.loc[df['Natureza Despesa'] == natureza_despesa, 'Empenhado'].values[0], 
-                'name': natureza_despesa 
+            {
+                "value": df.loc[
+                    df["Natureza Despesa"] == natureza_despesa, "Empenhado"
+                ].values[0],
+                "name": natureza_despesa,
             }
-            for natureza_despesa in df['Natureza Despesa'].unique()
+            for natureza_despesa in df["Natureza Despesa"].unique()
         ]
     elif tipo == "Liquidado":
         data = [
-            { 
-                'value': df.loc[df['Natureza Despesa'] == natureza_despesa, 'Liquidado'].values[0], 
-                'name': natureza_despesa 
+            {
+                "value": df.loc[
+                    df["Natureza Despesa"] == natureza_despesa, "Liquidado"
+                ].values[0],
+                "name": natureza_despesa,
             }
-            for natureza_despesa in df['Natureza Despesa'].unique()
+            for natureza_despesa in df["Natureza Despesa"].unique()
         ]
     else:
         data = []
-        
+
     series.append(
         {
             "type": "pie",
             "id": str(uuid.uuid4()),
-            "radius": '50%',
+            "radius": "50%",
             "center": ["50%", "70%"],
-            "label": {
-                "formatter": "{d}% | R$ {@[tipo]}"
-            },
+            "label": {"formatter": "{d}% | R$ {@[tipo]}"},
             "encode": {
                 "itemName": "Natureza Despesa",
                 "value": "Empenhado",
                 "tooltip": "Empenhado",
             },
-            "data": data
+            "data": data,
         }
     )
 
@@ -48,7 +51,6 @@ def get_options_month_detail(df, tipo):
         "legend": {"left": "1%", "right": "2%"},
         "tooltip": {"trigger": "axis", "showContent": False},
         "series": series,
-        
     }
 
 
@@ -120,7 +122,13 @@ def get_options_month(df):
             "axisLabel": {"margin": 20},
         },
         "yAxis": {"gridIndex": 0},
-        "grid": {"top": "20%", "left": "1%", "right": "2%", "bottom": "0%", "containLabel": True},
+        "grid": {
+            "top": "20%",
+            "left": "1%",
+            "right": "2%",
+            "bottom": "0%",
+            "containLabel": True,
+        },
         "series": series,
     }
 
