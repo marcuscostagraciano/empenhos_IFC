@@ -1,4 +1,5 @@
 from time import time
+from typing import Final
 
 import pandas as pd
 import streamlit as st
@@ -47,28 +48,10 @@ def by_month(advanced_report=False):
         st.table(raw_datas_df)
         row2 = st.columns(2, gap="medium")
 
-        start_time = time()
-        with row2[0]:
-            st.caption("## Empenhado")
-            st.caption("Recurso empenhado pela Direção do IFC - Araquari")
-            meses = [unformatted_months(month) for month in st.session_state.months]
-            raw_datas = df_manager.get_df_month_monetary_values(meses, "Empenhado")
-            chart_options = get_options_month_detail(raw_datas, "Empenhado")
-            start_time = time()
-            st_echarts(
-                chart_options,
-                height="500px",
-                key=f"{st.session_state}df_moth_detail_comitted",
-            )
-            stop_time = time()
-            print(f"Tempo gasto plotando Gráfico 'empenhado': {stop_time - start_time}")
-
-        stop_time = time()
-        print(f"Tempo gasto Gráfico 'empenhado': {stop_time - start_time}")
-
-        start_time = time()
-        with row2[1]:
-            cria_grafico(df_manager, "liquidado")
+        INDICE_TIPO: Final[dict[int, str]] = {0: "empenhado", 1: "liquidado"}
+        for indice in INDICE_TIPO:
+            with row2[indice]:
+                cria_grafico(df_manager, INDICE_TIPO[indice])
 
 
 def cria_grafico(df_manager: DataframeManager, tipo_dado: str) -> None:
@@ -81,10 +64,14 @@ def cria_grafico(df_manager: DataframeManager, tipo_dado: str) -> None:
     raw_datas = df_manager.get_df_month_monetary_values(meses, tipo_dado_maiusculo)
     chart_options = get_options_month_detail(raw_datas, tipo_dado_maiusculo)
     start_time = time()
+
     st_echarts(
         chart_options,
         height="500px",
         key=f"{st.session_state}df_moth_detail_liquidated",
     )
+
     stop_time = time()
-    print(f"Tempo gasto plotando Gráfico 'liquidado': {stop_time - start_time}\n")
+    print(
+        f"Tempo gasto plotando Gráfico '{tipo_dado_maiusculo}': {stop_time - start_time}\n"
+    )
