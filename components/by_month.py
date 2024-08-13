@@ -17,11 +17,12 @@ def by_month(advanced_report=False):
     ]
     stop_time = time()
     print(f"Tempo gasto with MONTHS: {stop_time - start_time}")
-    st.write(months)
 
-    st.session_state.months = st.multiselect(
+    st.multiselect(
         label="Selecione os meses",
-        key=f"get_month_{advanced_report}",
+        # Identificador no "st.session_state"
+        # Com o 'key="months"', não é necessário atribuir este seletor ao "st.session_state.months"
+        key="months",
         options=months,
         placeholder="Selecione o mês",
         default=months[-1],
@@ -31,6 +32,7 @@ def by_month(advanced_report=False):
         st.info("Selecione um mês", icon="ℹ️")
     else:
         raw_datas = []
+
         unformatted_months_list = [
             unformatted_months(month) for month in st.session_state.months
         ]
