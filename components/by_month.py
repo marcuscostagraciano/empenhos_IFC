@@ -68,8 +68,13 @@ def cria_grafico(df_manager: DataframeManager, tipo_dado: str) -> None:
     st_echarts(
         chart_options,
         height="500px",
-        key=f"{st.session_state}df_moth_detail_liquidated",
+        key=f"GRAFICO_{tipo_dado}",
     )
+    # st_echarts(
+    #     chart_options,
+    #     height="500px",
+    #     key=f"{st.session_state}df_moth_detail_liquidated",
+    # )
 
     stop_time = time()
     print(
