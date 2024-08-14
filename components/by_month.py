@@ -3,6 +3,7 @@ from typing import Final
 
 import pandas as pd
 import streamlit as st
+import plotly.express as px
 from streamlit_echarts import st_echarts
 
 from classes.dataframe_manager import DataframeManager
@@ -62,14 +63,25 @@ def cria_grafico(df_manager: DataframeManager, tipo_dado: str) -> None:
     meses = [unformatted_months(month) for month in st.session_state.months]
 
     raw_datas = df_manager.get_df_month_monetary_values(meses, tipo_dado_maiusculo)
-    chart_options = get_options_month_detail(raw_datas, tipo_dado_maiusculo)
+    #chart_options = get_options_month_detail(raw_datas, tipo_dado_maiusculo)
     start_time = time()
 
-    st_echarts(
-        chart_options,
-        height="500px",
-        key=f"GRAFICO_{tipo_dado}",
-    )
+    #Não esquece que tem que instalar o plotly
+    #pip install plotly==5.23.0
+    
+    if (tipo_dado == 'empenhado'):
+        fig = px.pie(raw_datas, values = 'Empenhado', names = 'Natureza Despesa')
+    else:
+        fig = px.pie(raw_datas, values = 'Liquidado', names = 'Natureza Despesa')
+
+    event = st.plotly_chart(fig)
+    event.selection
+
+    #st_echarts(
+    #    chart_options,
+    #    height="500px",
+    #    key=f"GRAFICO_{tipo_dado}",
+    #)
     # st_echarts(
     #     chart_options,
     #     height="500px",
