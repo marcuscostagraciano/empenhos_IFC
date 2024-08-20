@@ -55,6 +55,26 @@ def main():
     # ):
     #     st.switch_page("pages/dados_brutos.py")
 
+    with open("tempos_carregamento.csv", "a", newline='\n') as arquivo_tempos:
+        metodos = [
+            "select_if",
+            "indicators",
+            "main_chart",
+            "nature_all",
+            "tabs_childrens",
+        ]
+        writer = csv.DictWriter(arquivo_tempos, fieldnames=metodos, delimiter=",")
+        writer.writerow(
+            {
+                "select_if": tempo_select_if,
+                "indicators": tempo_indicators,
+                "main_chart": tempo_main_chart,
+                "nature_all": tempo_nature_all,
+                "tabs_childrens": tempo_tabs_childrens,
+            }
+        )
+        print("Dados salvos no CSV!")
+
 
 if __name__ == "__main__":
     st.set_page_config(
