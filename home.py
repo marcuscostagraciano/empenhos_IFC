@@ -55,7 +55,7 @@ def main():
     # ):
     #     st.switch_page("pages/dados_brutos.py")
 
-    with open("tempos_carregamento.csv", "a", newline='\n') as arquivo_tempos:
+    with open("tempos_carregamento.csv", "a", newline="\n") as arquivo_tempos:
         metodos = [
             "select_if",
             "indicators",
