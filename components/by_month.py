@@ -1,4 +1,4 @@
-from time import time
+from time import perf_counter as time
 from typing import Final
 
 import pandas as pd

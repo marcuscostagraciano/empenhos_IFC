@@ -1,3 +1,5 @@
+from time import perf_counter
+
 import streamlit as st
 
 from components.indicators import indicators
@@ -10,11 +12,26 @@ from components.tabs_childrens import tabs_childrens
 def main():
     st.title("Acompanhamento da execução orçamentária do :green[IFC - Campus Araquari]")
     st.caption(":blue[Version 1.0.5]")
+
+    t1 = perf_counter()
     select_if()
+    print(f"Tempo gasto com 'select_if()': {perf_counter() - t1}s")
+
+    t1 = perf_counter()
     indicators()
+    print(f"Tempo gasto com 'indicators()': {perf_counter() - t1}s")
+
+    t1 = perf_counter()
     main_chart()
+    print(f"Tempo gasto com 'main_chart()': {perf_counter() - t1}s")
+
+    t1 = perf_counter()
     nature_all()
+    print(f"Tempo gasto com 'nature_all()': {perf_counter() - t1}s")
+
+    t1 = perf_counter()
     tabs_childrens()
+    print(f"Tempo gasto com 'tabs_childrens()': {perf_counter() - t1}s")
 
     # REMOÇÃO (TALVEZ) TEMPORÁRIA
     # st.divider()
