@@ -1,4 +1,4 @@
-from time import perf_counter as time
+from time import perf_counter
 from typing import Final
 
 import pandas as pd
@@ -13,12 +13,12 @@ from utils import *
 def by_month(advanced_report=False):
     df_manager = DataframeManager()
 
-    start_time = time()
+    # start_time = perf_counter()
     months = [
         formatted_months(month) for month in st.session_state.df_master["Mês"].unique()
     ]
-    stop_time = time()
-    print(f"Tempo gasto with MONTHS: {stop_time - start_time}")
+    # stop_time = perf_counter()
+    # print(f"Tempo gasto with MONTHS: {stop_time - start_time}")
 
     st.multiselect(
         label="Selecione os meses",
@@ -65,8 +65,7 @@ def cria_grafico(df_manager: DataframeManager, tipo_dado: str) -> None:
     raw_datas = df_manager.get_df_month_monetary_values(meses, tipo_dado_maiusculo)
     chart_options = get_options_month_detail(raw_datas, tipo_dado_maiusculo)
 
-    start_time = time()
-
+    # start_time = perf_counter()
     # APESAR DE FUNCIONAL, O PLOTLY DEMORA MAIS PARA GERAR OS GRÁFICOS 
     # st.plotly_chart(
     #     px.pie(
@@ -93,8 +92,7 @@ def cria_grafico(df_manager: DataframeManager, tipo_dado: str) -> None:
     #     key=f"{st.session_state}df_moth_detail_liquidated",
     # )
 
-    stop_time = time()
-
-    print(
-        f"Tempo gasto gerando gráfico '{tipo_dado_maiusculo}': {stop_time - start_time}\n"
-    )
+    # stop_time = perf_counter()
+    # print(
+    #     f"Tempo gasto gerando gráfico '{tipo_dado_maiusculo}': {stop_time - start_time}\n"
+    # )

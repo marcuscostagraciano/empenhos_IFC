@@ -1,3 +1,4 @@
+import csv
 from time import perf_counter
 
 import streamlit as st
@@ -15,23 +16,28 @@ def main():
 
     t1 = perf_counter()
     select_if()
-    print(f"Tempo gasto com 'select_if()': {perf_counter() - t1}s")
+    tempo_select_if = perf_counter() - t1
+    print(f"Tempo gasto com 'select_if()': {tempo_select_if}s")
 
     t1 = perf_counter()
     indicators()
-    print(f"Tempo gasto com 'indicators()': {perf_counter() - t1}s")
+    tempo_indicators = perf_counter() - t1
+    print(f"Tempo gasto com 'indicators()': {tempo_indicators}s")
 
     t1 = perf_counter()
     main_chart()
-    print(f"Tempo gasto com 'main_chart()': {perf_counter() - t1}s")
+    tempo_main_chart = perf_counter() - t1
+    print(f"Tempo gasto com 'main_chart()': {tempo_main_chart}s")
 
     t1 = perf_counter()
     nature_all()
-    print(f"Tempo gasto com 'nature_all()': {perf_counter() - t1}s")
+    tempo_nature_all = perf_counter() - t1
+    print(f"Tempo gasto com 'nature_all()': {tempo_nature_all}s")
 
     t1 = perf_counter()
     tabs_childrens()
-    print(f"Tempo gasto com 'tabs_childrens()': {perf_counter() - t1}s")
+    tempo_tabs_childrens = perf_counter() - t1
+    print(f"Tempo gasto com 'tabs_childrens()': {tempo_tabs_childrens}s\n")
 
     # REMOÇÃO (TALVEZ) TEMPORÁRIA
     # st.divider()
