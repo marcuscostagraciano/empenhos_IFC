@@ -239,12 +239,12 @@ class DataframeManager:
             ],
         }
 
-        df_by_all_nature["Empenhado (R$)"] = df_by_all_nature["Empenhado"].map(
-            "R$ {:,.2f}".format
-        )
-        df_by_all_nature["Liquidado (R$)"] = df_by_all_nature["Liquidado"].map(
-            "R$ {:,.2f}".format
-        )
+        df_by_all_nature['Empenhado (R$)'] = df_by_all_nature['Empenhado']
+        df_by_all_nature['Liquidado (R$)'] = df_by_all_nature['Liquidado']
+        
+        total_empenhado = (df_by_all_nature['Empenhado'].sum())
+        total_liquidado = (df_by_all_nature['Liquidado'].sum())
+        df_by_all_nature.loc[len(df_by_all_nature)] = ['Total', total_empenhado, total_liquidado, total_empenhado, total_liquidado]
 
         total_empenhado = "R$ {:,.2f}".format(df_by_all_nature["Empenhado"].sum())
         total_liquidado = "R$ {:,.2f}".format(df_by_all_nature["Liquidado"].sum())
@@ -421,12 +421,13 @@ class DataframeManager:
     def get_indicators(self):
         self.to_float()
         df = st.session_state.df_master
-        committed = df["Empenhado"].sum()
-        settled = df["Liquidado"].sum()
-        balance = committed - settled
-        committed_formatted = "{:,.2f}".format(committed)
-        settled_formatted = "{:,.2f}".format(settled)
-        balance_formatted = "{:,.2f}".format(balance)
+        committed = df['Empenhado'].sum()
+        settled = df['Liquidado'].sum()
+        balance = (committed - settled)
+        # committed_formatted = "{:,.2f}".format(committed)
+        committed_formatted = brazilian_currency(committed)
+        settled_formatted = brazilian_currency(settled)
+        balance_formatted = brazilian_currency(balance)
 
         return [committed_formatted, settled_formatted, balance_formatted]
 

@@ -1,5 +1,6 @@
 import streamlit as st
 from streamlit_echarts import st_echarts
+# from utils import brazilian_currency
 
 from classes.dataframe_manager import DataframeManager
 
@@ -7,6 +8,7 @@ from classes.dataframe_manager import DataframeManager
 def nature_all(advanced_report=False):
     df_manager = DataframeManager()
     [option, get_dataframe_by_nature] = df_manager.get_df_by_all_nature()
+    # st.write(get_dataframe_by_nature)
     options = {
         **option,
         "title": {

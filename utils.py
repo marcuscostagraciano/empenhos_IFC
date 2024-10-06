@@ -2,9 +2,8 @@ import random
 import uuid
 from typing import Final
 
-import altair as alt
 import pandas as pd
-import streamlit as st
+from babel.numbers import format_currency
 
 
 def get_options_month_detail(df: pd.DataFrame, tipo: str) -> dict:
@@ -124,6 +123,8 @@ def formatted_months(month: str) -> str:
 
     return dict[month]
 
+def brazilian_currency(money):
+    return format_currency(money, 'BRL', locale='pt_BR')
 
 def get_options_month(df: pd.DataFrame) -> dict:
     df.columns = [
