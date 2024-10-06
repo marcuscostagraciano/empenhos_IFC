@@ -123,8 +123,10 @@ def formatted_months(month: str) -> str:
 
     return dict[month]
 
+
 def brazilian_currency(money):
-    return format_currency(money, 'BRL', locale='pt_BR')
+    return format_currency(money, "BRL", locale="pt_BR")
+
 
 def get_options_month(df: pd.DataFrame) -> dict:
     df.columns = [
